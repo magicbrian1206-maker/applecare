@@ -158,7 +158,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{border-bottom:1px
  </div>
 </section>
 
-<div class="foot">版本 <span id="build">20261007-202821</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
+<div class="foot">版本 <span id="build">20261007-203039</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
 </main>
 
 <script>
@@ -329,7 +329,7 @@ function renderDmg(){const it=damageItems(S.cat,curM(),(curSku()||[])[2]||0);if(
 function renderResult(){
  const cat=S.cat,m=curM(),sk=curSku(),it=damageItems(cat,m,(sk||[])[2]||0).find(x=>x.k===S.dk);
  const price=+$("#price").value||0,tier=jcTier(cat,price,m),fee=cat==="mac"?800:300;
- const noTxt=`<div class="big">${fmt(it.o)}</div><div class="small">${it.oN?it.oN+"<br>":""}Apple 官網保固外預估價（含稅），以檢查為準<br>報價不修／拒修收檢測費 $${fee}</div>`;
+ const noTxt=`<div class="big">${fmt(it.o)}</div><div class="small">${it.oN?it.oN+"<br>":""}Apple 官網保固外預估價（含稅），<span style="white-space:nowrap">以檢查為準</span><br>報價不修／拒修收檢測費 $${fee}</div>`;
  let acBody=it.lost?`<div class="big">${fmt(it.o)}</div><div class="small">AppleCare+ 不承保遺失，需自費</div>`
   :`<div class="big">${fmt(it.ac)}</div><div class="small">${it.k==="bat"?"電池容量低於 80% 免費更換<br>":""}${it.acN?it.acN+"<br>":""}</div>`;
  acBody+=`<div class="small">專案費用：<b>${m.ac?fmt(m.ac):"價目表未列"}</b>（${AC_YEARS[cat]} 年）${m.acSrc?"<br>※ 價格取自 "+m.acSrc+" 價目表":""}${m.ac?"":"<br>AppleCare+ 價格請洽 0800-095-988"}</div>`;
