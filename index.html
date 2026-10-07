@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="蘋果保固方案">
+<meta name="theme-color" content="#0071e3">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.png">
+<title>蘋果保固方案</title>
+<style>
+:root{--bg:#f5f5f7;--card:#fff;--tx:#1d1d1f;--sub:#6e6e73;--line:#e5e5ea;--blue:#0071e3;--ac:#0a84ff;--jc:#ff9f0a;--no:#ff3b30;--ok:#34c759;--r:16px}
+@media(prefers-color-scheme:dark){:root{--bg:#000;--card:#1c1c1e;--tx:#f5f5f7;--sub:#98989d;--line:#38383a}}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,"PingFang TC","Noto Sans TC",sans-serif;background:var(--bg);color:var(--tx);-webkit-text-size-adjust:100%}
+a{color:var(--blue)}
+header{padding:calc(env(safe-area-inset-top) + 18px) 18px 6px;text-align:center}
+h1{margin:0;font-size:24px}.slogan{color:var(--sub);font-size:14px;margin-top:4px}
+nav{position:sticky;top:0;z-index:9;display:flex;gap:6px;padding:10px 12px;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+nav button{flex:1;border:0;border-radius:12px;padding:10px 4px;font-size:15px;background:var(--card);color:var(--tx)}nav button.on{background:var(--blue);color:#fff;font-weight:600}
+main{max-width:860px;margin:0 auto;padding:6px 12px calc(env(safe-area-inset-bottom) + 60px)}.tab{display:none}.tab.on{display:block}
+.card{background:var(--card);border-radius:var(--r);padding:16px;margin:12px 0}
+h2{font-size:17px;margin:0 0 10px}label{font-size:13px;color:var(--sub);display:block;margin:10px 0 4px}
+select,input{width:100%;font-size:16px;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--tx);-webkit-appearance:none;appearance:none}
+.seg{display:flex;flex-wrap:wrap;gap:6px}.seg button{border:1px solid var(--line);background:var(--bg);color:var(--tx);border-radius:999px;padding:8px 14px;font-size:14px}
+.seg button.on{background:var(--tx);color:var(--bg);border-color:var(--tx)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}@media(max-width:640px){.grid3{grid-template-columns:1fr}}
+.res{border-radius:14px;padding:14px;border:2px solid var(--line)}.res h3{margin:0 0 6px;font-size:15px}
+.res.no{border-color:var(--no)}.res.ac{border-color:var(--ac)}.res.jc{border-color:var(--jc)}
+.big{font-size:26px;font-weight:700;margin:4px 0}.small{font-size:12px;color:var(--sub);line-height:1.6}
+.save{margin-top:10px;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--ok) 15%,transparent);font-size:14px}
+details{background:var(--card);border-radius:var(--r);margin:10px 0;padding:0 16px}summary{padding:14px 0;font-weight:600;cursor:pointer}
+details ul{margin:0 0 14px;padding-left:20px;line-height:1.7;font-size:14px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{border-bottom:1px solid var(--line);padding:7px 4px;text-align:left;white-space:nowrap}th{color:var(--sub);font-weight:500}
+.row{display:flex;gap:8px}.row>*{flex:1;min-width:0}.btn{border:0;border-radius:12px;padding:12px;font-size:16px;background:var(--blue);color:#fff;width:100%;margin-top:12px;display:block;text-align:center;text-decoration:none}
+.btn.ghost{background:var(--bg);color:var(--tx);border:1px solid var(--line)}
+.rec{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}.rec input{width:22px;height:22px;flex:none;-webkit-appearance:checkbox;appearance:auto}.rec .amt{margin-left:auto;font-weight:600;white-space:nowrap}
+.x{border:0;background:none;color:var(--no);font-size:18px;padding:4px}.total{font-size:30px;font-weight:700;text-align:right}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;background:var(--bg);border:1px solid var(--line);margin-right:6px}
+.loc{padding:12px 0;border-bottom:1px solid var(--line)}.loc b{font-size:15px}
+.warn{color:var(--no)}.foot{text-align:center;color:var(--sub);font-size:12px;margin-top:20px;line-height:1.7}
+</style>
+</head>
+<body>
+<header><h1>🍎 蘋果保固方案</h1><div class="slogan">機不可失，「保」不可少</div></header>
+<nav><button class="on" data-t="cmp">🛡️ 方案比較</button><button data-t="bonus">💰 獎金試算</button><button data-t="loc">📍 維修據點</button></nav>
+<main>
+
+<!-- ============ 方案比較 ============ -->
+<section id="cmp" class="tab on">
+ <div class="card">
+  <h2>① 選擇商品</h2>
+  <div class="seg" id="catSeg"></div>
+  <label>機型</label><select id="model"></select>
+  <div id="skuWrap"><label>規格／容量（自動帶入售價）</label><select id="sku"></select></div>
+  <label>購買金額（可自行修改，例如教育價；JustCare 依此金額判斷級距）</label><input id="price" type="number" inputmode="numeric" placeholder="請輸入金額">
+ </div>
+ <div class="card">
+  <h2>② 選擇損壞項目</h2>
+  <div class="seg" id="dmgSeg"></div>
+ </div>
+ <div class="card" id="result"></div>
+
+ <details><summary>🔍 檢測費 · 保固內外 · 送修注意</summary><ul>
+  <li><b>檢測處理費（燦坤送修）</b>：iPhone／iPad／Watch／AirPods／HomePod <b>$300</b>；Mac <b>$800</b>。適用：保固外、意外損壞報價不修、拒絕維修。</li>
+  <li><b>保固內</b>：Apple 一年有限保固，只涵蓋<b>製造瑕疵</b>；意外損壞（摔、壓、進液）不在保固範圍內。</li>
+  <li><b>保固外</b>：依 Apple 官網預估費用（含稅），以實際檢查為準；授權維修中心可自行定價。</li>
+  <li>Apple 維修服務與替換零件享 <b>90 天保證</b>或保固剩餘期限（取較長者）。</li>
+  <li>經第三方（非授權）拆修，可能不符維修資格。液體損壞以維修中心判定為準。</li>
+  <li>送修前請自行備份，維修後無法保留資料；請先關閉「尋找」、拆下保護殼；保貼、包膜不負賠償。</li>
+  <li>Mac 送修須勾選同意「無法保留資料」，否則退件。</li>
+  <li>保固查詢：<a href="https://checkcoverage.apple.com/tw/zh" target="_blank" rel="noopener">checkcoverage.apple.com</a>　AppleCare+ 客服：<a href="tel:0800095988">0800-095-988</a></li>
+ </ul></details>
+ <details><summary>🔵 AppleCare+ 權益與條款</summary><ul>
+  <li>保固年限：iPhone／iPad／Watch／AirPods <b>2 年</b>；Mac、顯示器 <b>3 年</b>。</li>
+  <li>意外損壞<b>不限次數</b>（依 Apple 官網說明），每次支付自負額。</li>
+  <li>電池容量低於 80% 可<b>免費</b>更換。</li>
+  <li>iPhone：螢幕或機背玻璃 $900；其他意外損壞 $3,200。</li>
+  <li>iPhone Duo：外保護層 $690、正面螢幕 $900、機背玻璃 $900、內螢幕 $3,200、其他 $3,200。</li>
+  <li>iPad：僅螢幕 $900、其他 $3,200；Apple Pencil 與鍵盤 $900（配件需自行致電 Apple 客服加保）。</li>
+  <li>Mac：螢幕或外殼 $3,200、其他 $9,600；MacBook Neo：螢幕或外殼 $1,590、其他 $4,990。</li>
+  <li>Watch：SE 3／S12 $2,200、Ultra 4 $2,500。AirPods：$900。</li>
+  <li>授權維修中心與 Apple 自負額相同。<b>遺失不在承保範圍</b>。</li>
+  <li>優先支援（線上對談／電話）。</li>
+ </ul></details>
+ <details><summary>🟠 JustCare 權益與條款</summary><ul>
+  <li>依<b>購買金額級距</b>計費：月繳（3 年保）、一次繳 1／2／3 年。</li>
+  <li>意外損壞每年最多 3 次，三年最高 9 次。</li>
+  <li>第一年（0–12M）：理賠上限 3 次（意外損壞及竊盜損失），達 3 次後持續付費，保單仍有效。</li>
+  <li>第二年（13–24M）：上限 3 次（意外損壞、第二年起故障、竊盜損失、Apple 品牌電池置換），達 3 次後保單仍有效。</li>
+  <li>第三年（25–36M）：上限 3 次，<b>達 3 次後保單即行終止</b>。</li>
+  <li>理賠方式包含免費原廠維修與付費置換服務。</li>
+  <li>置換：意外損壞 Apple 換整新機、非 Apple 換全新機；<b>竊盜損失一律換全新機</b>。</li>
+  <li>電池置換（限 Apple 品牌）：經指定維修中心檢測容量<b>低於 80%（不含 80%）</b>。</li>
+  <li>Mac 維修自負額 $3,000／$4,000、置換自負額 $5,000／$9,000；109,901–119,900 級距限 MBP 16"，無三年方案。</li>
+ </ul></details>
+ <details><summary>📋 方案費率總表</summary><div id="rateTables" style="padding-bottom:14px"></div></details>
+</section>
+
+<!-- ============ 獎金試算 ============ -->
+<section id="bonus" class="tab">
+ <div class="card">
+  <h2>新增一筆</h2>
+  <div class="row"><div><label>月份</label><input id="month" type="month"></div><div><label>類型</label>
+   <select id="btype"><option value="ac">AppleCare+</option><option value="jc">JustCare</option><option value="ms">MySetup</option><option value="sv">服務貨號</option><option value="ti">舊換新</option></select></div></div>
+  <div id="bform"></div>
+  <div class="small" id="bprev" style="margin-top:6px"></div>
+  <label>備註（例如客人姓氏、單號後四碼）</label><input id="bnote">
+  <button class="btn" id="badd">＋ 加入本月紀錄</button>
+ </div>
+ <div class="card">
+  <h2>本月紀錄 <span class="small">（打勾＝計入獎金）</span></h2>
+  <div id="blist"></div>
+  <div id="bsum" style="margin-top:12px"></div>
+  <button class="btn ghost" id="bcopy">📋 複製本月明細</button>
+  <button class="btn ghost" id="bclear">清除本月紀錄</button>
+  <div class="small" style="margin-top:8px">紀錄只存在你自己的手機／電腦瀏覽器中，不會上傳。</div>
+ </div>
+ <details><summary>📖 獎金規則（2026 蘋果專員獎金算法）</summary><ul>
+  <li><b>AppleCare+</b>：依個人單月總套數決定比例，套用到當月全部 AC 保費：1–2 套 2%、3 套 3%、4 套 4%、5 套 5%、6 套以上 6%。</li>
+  <li><b>JustCare</b>：保費金額 × 10%（月繳以單期月繳金額計）。</li>
+  <li><b>MySetup</b>（完成原廠指定要求）：Mac $123、iPad $40、iPhone $40、Apple Watch $40。</li>
+  <li><b>服務貨號</b>：211224 Apple 商品服務 350 元 → $110；211225 Apple 商品服務 800 元 → $250。</li>
+  <li><b>舊換新</b>（廠商檢查後回收金額）：10,000 以上 → 回收金額 1%；未滿 10,000 → $100。</li>
+ </ul></details>
+</section>
+
+<!-- ============ 維修據點 ============ -->
+<section id="loc" class="tab">
+ <div class="card">
+  <h2>Apple 授權維修中心</h2>
+  <label>縣市</label><select id="city"></select>
+  <div id="locRes" style="margin-top:4px"></div>
+ </div>
+ <div class="card small">
+  ☎️ AppleCare+ 客服：<a href="tel:0800095988">0800-095-988</a><br>
+  🔗 官方據點查詢：<a href="https://locate.apple.com/tw/zh/service" target="_blank" rel="noopener">locate.apple.com</a><br>
+  ⚠️ 據點資料整理自 mrmad 文章截圖，營業時間與電話請以各店公告為準。
+ </div>
+</section>
+
+<div class="foot">維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
+</main>
+
+<script>
+/* ================= 資料區（價格更新只改這裡） ================= */
+const CATS = {iphone:"iPhone",ipad:"iPad",mac:"Mac",watch:"Apple Watch",airpods:"AirPods"};
+const AC_YEARS = {iphone:2,ipad:2,mac:3,watch:2,airpods:2};
+
+/* 欄位說明
+   ac  = AppleCare+ 專案費用（null = 價目表未列）
+   o   = iPhone 官網保固外價格 {screen,back,both,cam,bat,other}
+   v   = 維修價分組 [名稱, 官網「其他損壞」價]（iPad／Watch 依 Wi-Fi、材質不同）
+   sku = 販售規格 [名稱, 售價, 對應 v 的索引] */
+const IPHONE = [
+ {n:"iPhone Duo",ac:null,duo:true,sku:[["256GB",74900],["512GB",81900],["1TB",96900],["2TB",118900]]},
+ {n:"iPhone 18 Pro Max",ac:6990,o:{screen:12290,back:4990,both:15090,cam:7999,bat:4490,other:32690},sku:[["256GB",49900],["512GB",56900],["1TB",71900],["2TB",93900]]},
+ {n:"iPhone 18 Pro",ac:6990,o:{screen:10790,back:4990,both:13490,cam:7999,bat:4490,other:31190},sku:[["256GB",44900],["512GB",51900],["1TB",66900],["2TB",88900]]},
+ {n:"iPhone Air",ac:6990,o:{screen:10790,back:4990,both:13490,cam:5190,bat:4150,other:26390},sku:[["256GB",39900],["512GB",46900],["1TB",61900]]},
+ {n:"iPhone 17 Pro Max",ac:6390,acSrc:"2026.07 版",o:{screen:12290,back:4990,both:15090,cam:7999,bat:4150,other:32690},sku:[["256GB",44900],["512GB",51900],["1TB",58900],["2TB",72900]]},
+ {n:"iPhone 17 Pro",ac:6390,acSrc:"2026.07 版",o:{screen:10790,back:4990,both:13490,cam:7999,bat:4150,other:31190},sku:[["256GB",39900],["512GB",46900],["1TB",53900]]},
+ {n:"iPhone 17",ac:5490,o:{screen:10790,back:4990,both:13490,cam:5190,bat:3350,other:22490},sku:[["256GB",32900],["512GB",39900]]},
+ {n:"iPhone 17e",ac:4490,o:{screen:7890,back:4990,both:10690,cam:4490,bat:3350,other:18190},sku:[["256GB",25900],["512GB",32900]]},
+ {n:"iPhone 16",ac:5490,o:{screen:8990,back:4990,both:11790,cam:5190,bat:3350,other:20190},sku:[["128GB",29900]]}
+];
+const IPAD = [
+ {n:"iPad Pro 11 吋（M5）",ac:5190,bat:5950,v:[["Wi-Fi",33890],["行動網路",35890]],sku:[
+  ["Wi-Fi 256GB",39900,0],["Wi-Fi 512GB",46900,0],["Wi-Fi 1TB",60900,0],["Wi-Fi 2TB",78400,0],["Wi-Fi 1TB 奈米紋理",64400,0],["Wi-Fi 2TB 奈米紋理",81900,0],
+  ["5G 256GB",46900,1],["5G 512GB",53900,1],["5G 1TB",67900,1],["5G 2TB",85400,1],["5G 1TB 奈米紋理",71400,1],["5G 2TB 奈米紋理",88900,1]]},
+ {n:"iPad Pro 13 吋（M5）",ac:5890,bat:6790,v:[["Wi-Fi",38890],["行動網路",40890]],sku:[
+  ["Wi-Fi 256GB",50900,0],["Wi-Fi 512GB",57900,0],["Wi-Fi 1TB",71900,0],["Wi-Fi 2TB",89400,0],["Wi-Fi 1TB 奈米紋理",75400,0],["Wi-Fi 2TB 奈米紋理",92900,0],
+  ["5G 256GB",57900,1],["5G 512GB",64900,1],["5G 1TB",78900,1],["5G 2TB",96400,1],["5G 1TB 奈米紋理",82400,1],["5G 2TB 奈米紋理",99900,1]]},
+ {n:"iPad Air 11 吋（M4）",ac:2890,bat:4290,v:[["Wi-Fi",18290],["行動網路",20490]],sku:[
+  ["Wi-Fi 128GB",24900,0],["Wi-Fi 256GB",28400,0],["Wi-Fi 512GB",35400,0],["Wi-Fi 1TB",45900,0],
+  ["5G 128GB",29900,1],["5G 256GB",33400,1],["5G 512GB",40400,1],["5G 1TB",50900,1]]},
+ {n:"iPad Air 13 吋（M4）",ac:3590,bat:4990,v:[["Wi-Fi",23790],["行動網路",25290]],sku:[
+  ["Wi-Fi 128GB",31900,0],["Wi-Fi 256GB",35400,0],["Wi-Fi 512GB",42400,0],["Wi-Fi 1TB",52900,0],
+  ["5G 128GB",36900,1],["5G 256GB",40400,1],["5G 512GB",47400,1],["5G 1TB",57900,1]]},
+ {n:"iPad mini（A17 Pro）",ac:2490,bat:3990,v:[["Wi-Fi",14590],["行動網路",16090]],sku:[
+  ["Wi-Fi 128GB",19900,0],["Wi-Fi 256GB",23400,0],["Wi-Fi 512GB",30400,0],["LTE 128GB",24900,1],["LTE 256GB",28400,1],["LTE 512GB",35400,1]]},
+ {n:"iPad（A16）",ac:2490,bat:3990,v:[["Wi-Fi",12890],["行動網路",14590]],sku:[
+  ["Wi-Fi 128GB",14900,0],["Wi-Fi 256GB",18400,0],["Wi-Fi 512GB",25400,0],["5G 128GB",19900,1],["5G 256GB",23400,1],["5G 512GB",30400,1]]}
+];
+const MAC = [
+ {n:"MacBook Neo 13 吋（A18 Pro）",ac:4990,t:"laptop",bat:4890,neo:true,sku:[["8GB/256GB",22900],["8GB/512GB（Touch ID）",25900]]},
+ {n:"MacBook Air 13 吋（M5）",ac:6790,t:"laptop",bat:5790,sku:[["16GB/512GB",42900],["16GB/1TB",53400],["24GB/1TB",60400]]},
+ {n:"MacBook Air 15 吋（M5）",ac:7790,t:"laptop",bat:6390,sku:[["16GB/512GB",49900],["16GB/1TB",60400],["24GB/1TB",67400]]},
+ {n:"MacBook Pro 14 吋（M5 系列）",ac:9490,t:"laptop",bat:7410,sku:[["M5 16GB/1TB",64900],["M5 24GB/1TB",71900],["M5 32GB/1TB",78900],["M5 Pro 15核 24GB/1TB",84900],["M5 Pro 15核 24GB/2TB",102400],["M5 Pro 18核 24GB/2TB",109900],["M5 Max 36GB/2TB",139900]]},
+ {n:"MacBook Pro 16 吋（M5 系列）",ac:13490,t:"laptop",bat:8090,mbp16:true,sku:[["M5 Pro 24GB/1TB",99900],["M5 Pro 48GB/1TB",120900],["M5 Max 32核 36GB/2TB",144900],["M5 Max 40核 48GB/2TB",169900]]},
+ {n:"iMac 24 吋（M4）",ac:5790,t:"imac",sku:[["8核 16GB/256GB",49900],["10核 16GB/256GB",57900],["10核 16GB/512GB",64900],["10核 24GB/512GB",71900],["10核 16GB/256GB 奈米紋理",64900]]},
+ {n:"Mac mini（2026）",ac:3490,t:"desktop",sku:[["M6 16GB/256GB",29900],["M6 16GB/512GB",36900],["M6 24GB/512GB",43900],["M5 Pro 24GB/512GB",59900]]},
+ {n:"Mac Studio（2026）",ac:5790,t:"desktop",sku:[["M5 Max 36GB/512GB",84900],["M5 Ultra 96GB/1TB",199900]]},
+ {n:"Studio Display（2026）",ac:4990,t:"display",nojc:true,sku:[]},
+ {n:"Studio Display XDR",ac:9990,t:"display",nojc:true,sku:[]}
+];
+const WATCH = [
+ {n:"Apple Watch SE 3",ac:1690,ded:2200,v:[["GPS",6390],["GPS + 行動網路",7190]],sku:[["GPS 40mm",7900,0],["GPS 44mm",8900,0],["LTE 40mm",9400,1],["LTE 44mm",10400,1]]},
+ {n:"Apple Watch Series 12",ac:2590,ded:2200,v:[["鋁金屬 GPS",9890],["鋁金屬 GPS + 行動網路",11590],["鈦金屬",15190],["精密陶瓷",20190]],sku:[
+  ["鋁 GPS 42mm",13900,0],["鋁 GPS 42mm 米蘭",15400,0],["鋁 GPS 46mm",15400,0],["鋁 GPS 46mm 米蘭",16900,0],
+  ["鋁 LTE 42mm",16900,1],["鋁 LTE 42mm 米蘭",18400,1],["鋁 LTE 46mm",18400,1],["鋁 LTE 46mm 米蘭",19900,1],
+  ["鈦 42mm",24900,2],["鈦 46mm",26400,2],["鈦 42mm 米蘭",26400,2],["鈦 46mm 米蘭",27900,2],
+  ["精密陶瓷 42mm",32900,3],["精密陶瓷 46mm",34400,3]]},
+ {n:"Apple Watch Ultra 4",ac:3190,ded:2500,v:[["Ultra 4",18490]],sku:[["海洋／越野／高山錶帶",27900,0],["鈦金屬米蘭錶帶",30900,0]]}
+];
+/* AirPods：bud 單耳損壞、cs 充電盒損壞、lb 單耳遺失、lc 充電盒遺失 */
+const AIRPODS = [
+ {n:"AirPods 4",ac:990,acSrc:"2026.07 版",bat:1590,bud:2290,cs:1890,lb:2290,lc:2290,sku:[["AirPods 4",3790]]},
+ {n:"AirPods 4（主動式降噪）",ac:990,acSrc:"2026.07 版",bat:1590,bud:2290,cs:2290,lb:2290,lc:2690,sku:[["AirPods 4 ANC",4790]]},
+ {n:"AirPods 5",ac:990,bat:1590,bud:2290,cs:1890,lb:2290,lc:2290,sku:[["AirPods 5",4490]]},
+ {n:"AirPods 5（無線充電盒）",ac:990,bat:1590,bud:2290,cs:2290,lb:2290,lc:2690,sku:[["AirPods 5 無線充電盒",5190]]},
+ {n:"AirPods Pro 3",ac:1290,bat:1590,bud:2690,cs:2690,lb:2690,lc:2990,sku:[["AirPods Pro 3",7490]]},
+ {n:"AirPods Max 2",ac:1990,bat:2390,max:true,sku:[["AirPods Max 2",17990]]}
+];
+const MODELS = {iphone:IPHONE,ipad:IPAD,mac:MAC,watch:WATCH,airpods:AIRPODS};
+
+/* JustCare 級距：[上限, 月繳, 1年, 2年, 3年, 維修自負額, 置換自負額]；null = 無此方案／未列 */
+const JC_PHONE = [[10000,98,1250,2250,3370,null,1000],[20000,198,2480,4580,6690,null,2000],[35000,288,3450,6220,9310,null,3000],[55000,358,4290,7720,11580,null,4500],[70000,458,5490,9880,14820,null,5500],[95000,548,5900,11800,17600,null,7000]];
+const JC_STD = [[8000,69,700,1300,1890,null,1000],[20000,119,1200,2200,3240,null,2000],[40000,189,1900,3400,5130,null,3000],[75000,239,2400,4300,6480,null,4000],[95000,349,3500,6500,9300,null,5500]];
+const JC_MAC = [[50000,255,2780,4990,6990,3000,5000],[109900,520,5680,9990,12490,4000,9000],[119900,520,5680,9900,null,4000,9000]];
+const JC_TABLE = {iphone:JC_PHONE,ipad:JC_STD,watch:JC_STD,airpods:JC_STD,mac:JC_MAC};
+const JC_PLANS = [["月繳（3年保）",1],["一次繳 1 年",2],["一次繳 2 年",3],["一次繳 3 年",4]];
+
+const MYSETUP = {Mac:123,iPad:40,iPhone:40,"Apple Watch":40};
+const SERVICE = {"211224 Apple 商品服務 350 元":110,"211225 Apple 商品服務 800 元":250};
+
+/* 維修據點：b 品牌、n 名稱、c 縣市、a 地址、t 電話、h 營業時間（依來源原文） */
+const CENTERS = [
+ {b:"神腦",n:"桃園藝文",c:"桃園市",a:"桃園市桃園區中正路1200號2樓",t:"03-3167988"},
+ {b:"神腦",n:"台北民權",c:"台北市",a:"台北市松山區民權東路三段102號1樓",t:"02-27186060"},
+ {b:"神腦",n:"八德優邑",c:"台北市",a:"台北市中正區八德路一段13號2樓",t:"02-33222133"},
+ {b:"神腦",n:"台中一中",c:"台中市",a:"台中市北區三民路三段148號",t:"04-22250335"},
+ {b:"神腦",n:"台中中港",c:"台中市",a:"台中市西屯區臺灣大道四段925號23樓之2",t:"04-23582589"},
+ {b:"神腦",n:"彰化曉陽",c:"彰化縣",a:"彰化縣彰化市中正路二段407號",t:"04-7270979"},
+ {b:"神腦",n:"嘉義興業",c:"嘉義市",a:"嘉義市西區興業西路387號",t:"05-2866366"},
+ {b:"神腦",n:"台南中華東",c:"台南市",a:"台南市東區中華東路三段201號",t:"06-2670606"},
+ {b:"神腦",n:"高雄巨蛋",c:"高雄市",a:"高雄市左營區博愛二路682號",t:"07-5562160"},
+ {b:"神腦",n:"金門金城",c:"金門縣",a:"金門縣金城鎮民權路182號2樓",t:"082-311600"},
+ {b:"神腦",n:"澎湖中華",c:"澎湖縣",a:"澎湖縣馬公市中華路263號",t:"06-9279595"},
+ {b:"燦坤",n:"內湖蘋果授權",c:"台北市",a:"台北市內湖區堤頂大道331號1樓",t:"02-77049823",h:"週一至週日 11:00AM~8:00PM"},
+ {b:"燦坤",n:"新莊蘋果授權",c:"新北市",a:"新北市新莊區中原東路188號",t:"02-77049838",h:"週一至週日 11:00AM~8:00PM"},
+ {b:"燦坤",n:"高雄蘋果授權",c:"高雄市",a:"高雄市左營區自由二路329號1F",t:"07-5506935",h:"週一至週日 11:00AM~8:00PM"},
+ {b:"台灣大數位",n:"板橋維修中心",c:"新北市",a:"新北市板橋區中山路一段3號2樓",t:"02-66353606",h:"週一至週日 12:00~20:00"},
+ {b:"台灣大數位",n:"台中維修中心",c:"台中市",a:"台中市南區復興路二段12號2樓",t:"02-66353612",h:"週一至週日 12:00~20:00"},
+ {b:"立展 iStore",n:"[i]Store Apple 授權維修中心",c:"台北市",a:"台北市大同區南京西路36號2樓",t:"02-2558-0806"},
+ {b:"Studio A",n:"台北站前",c:"台北市",a:"台北市南陽街1號1樓",t:"02-2381-3951"},
+ {b:"Studio A",n:"台北大安",c:"台北市",a:"台北市大安區忠孝東路4段98號2樓",t:"02-877-20075"},
+ {b:"Studio A",n:"台北士林",c:"台北市",a:"台北市士林區文林路138號2樓",t:"02-2883-0201"},
+ {b:"Studio A",n:"新竹中正",c:"新竹市",a:"新竹市東區中正路28號",t:"03-522-7525"},
+ {b:"Studio A",n:"台中公益",c:"台中市",a:"台中市西區公益路151號1F",t:"04-2301-5607"},
+ {b:"Studio A",n:"台中大墩",c:"台中市",a:"台中市南屯區大墩路533號1F",t:"04-2320-3905"},
+ {b:"Studio A",n:"台南西門",c:"台南市",a:"台南市西門路一段635號",t:"06-223-6311"},
+ {b:"Studio A",n:"高雄三多",c:"高雄市",a:"高雄市苓雅區三多三路254號3樓",t:"07-963-8330"},
+ {b:"Studio A",n:"花蓮維修中心",c:"花蓮縣",a:"花蓮市中山路172號2樓",t:"03-831-1407"},
+ {b:"德誼數位",n:"桃園中壢NOVA",c:"桃園市",a:"桃園縣中壢市中正路389號3樓",t:"03-491-9415"},
+ {b:"德誼數位",n:"台北台大",c:"台北市",a:"台北市中正區羅斯福路三段292號3樓",t:"02-2369-0958"},
+ {b:"德誼數位",n:"台中nova",c:"台中市",a:"台中市西區英才路508號2樓",t:"04-2329-1708"},
+ {b:"德誼數位",n:"台中文心",c:"台中市",a:"台中市北區文心路四段190-5號",t:"04-2298-0227"},
+ {b:"德誼數位",n:"台南民族",c:"台南市",a:"台南市中西區民族路二段231號2樓",t:"06-222-8497"},
+ {b:"德誼數位",n:"高雄建國",c:"高雄市",a:"高雄市建國二路150號",t:"07-236-1625"}
+];
+const CITY_ORDER = ["台北市","新北市","桃園市","新竹市","台中市","彰化縣","嘉義市","台南市","高雄市","花蓮縣","澎湖縣","金門縣"];
+
+/* ================= 邏輯 ================= */
+const $=s=>document.querySelector(s);
+const fmt=n=>typeof n==="number"?"$"+n.toLocaleString():n;
+const fmt1=n=>"$"+(Math.round(n*10)/10).toLocaleString();
+function jcTier(cat,price,m){
+ if(!price||!m||m.nojc)return null;
+ if(cat==="mac"&&price>109900&&!m.mbp16)return null;
+ return JC_TABLE[cat].find(r=>price<=r[0])||null;
+}
+
+function damageItems(cat,m,vi){
+ const Q="依原廠報價";
+ if(cat==="iphone"){
+  if(m.duo)return[
+   {k:"outer",l:"外保護層",o:"官網未公布",ac:690},{k:"front",l:"正面螢幕損壞",o:"官網未公布",ac:900},
+   {k:"back",l:"機背玻璃損壞",o:"官網未公布",ac:900},{k:"inner",l:"內螢幕損壞",o:"官網未公布",ac:3200},
+   {k:"other",l:"其他意外損壞",o:"官網未公布",ac:3200},{k:"bat",l:"電池更換",o:"官網未公布",ac:0}];
+  const o=m.o;return[
+   {k:"screen",l:"螢幕破裂",o:o.screen,ac:900},{k:"back",l:"機背玻璃破裂",o:o.back,ac:900},
+   {k:"both",l:"螢幕＋機背",o:o.both,ac:"官網未單列，依 Apple 判定"},{k:"cam",l:"後置相機損壞",o:o.cam,ac:3200,acN:"屬「其他意外損壞」"},
+   {k:"other",l:"其他損壞（彎曲、進液等）",o:o.other,ac:3200},{k:"bat",l:"電池更換",o:o.bat,ac:0}];
+ }
+ if(cat==="ipad"){const other=m.v[vi][1];return[
+  {k:"screen",l:"僅螢幕損壞",o:other,oN:"官網未單列螢幕價，以「其他損壞」計",ac:900},
+  {k:"other",l:"其他損壞（彎曲、進液等）",o:other,ac:3200},{k:"bat",l:"電池更換",o:m.bat,ac:0},
+  {k:"acc",l:"Apple Pencil／鍵盤",o:Q,ac:900,acN:"配件需自行致電 Apple 客服加保"}];}
+ if(cat==="mac"){const s=m.neo?1590:3200,x=m.neo?4990:9600,a=[];
+  if(m.t!=="desktop")a.push({k:"screen",l:"螢幕損壞",o:Q,ac:s});
+  a.push({k:"case",l:"外部機殼損壞",o:Q,ac:s},{k:"other",l:"其他意外損壞（主機板、進液）",o:Q,ac:x});
+  if(m.t==="laptop")a.push({k:"bat",l:"電池更換",o:m.bat,ac:0});return a;}
+ if(cat==="watch")return[{k:"acc",l:"意外損壞（螢幕、機身）",o:m.v[vi][1],ac:m.ded},{k:"bat",l:"電池更換",o:3350,ac:0}];
+ if(cat==="airpods"){
+  if(m.max)return[{k:"acc",l:"意外損壞",o:Q,ac:900},{k:"bat",l:"電池更換",o:m.bat,ac:0}];
+  return[{k:"bud",l:"單耳損壞",o:m.bud,ac:900},{k:"cs",l:"充電盒損壞",o:m.cs,ac:900},{k:"bat",l:"電池更換",o:m.bat,ac:0},
+   {k:"lb",l:"單耳遺失",o:m.lb,ac:"不承保（遺失）",lost:true},{k:"lc",l:"充電盒遺失",o:m.lc,ac:"不承保（遺失）",lost:true}];}
+}
+
+const S={cat:"iphone",mi:2,si:0,dk:null};
+const curM=()=>MODELS[S.cat][S.mi], curSku=()=>(curM().sku||[])[S.si];
+const skuOpts=m=>(m.sku||[]).map((s,i)=>`<option value="${i}">${s[0]}　${fmt(s[1])}</option>`).join("");
+
+function renderCats(){$("#catSeg").innerHTML=Object.entries(CATS).map(([k,v])=>`<button class="${k===S.cat?"on":""}" data-c="${k}">${v}</button>`).join("");}
+function renderModels(){$("#model").innerHTML=MODELS[S.cat].map((m,i)=>`<option value="${i}">${m.n}</option>`).join("");$("#model").value=S.mi;renderSku();}
+function renderSku(){const m=curM(),sk=m.sku||[];$("#skuWrap").style.display=sk.length?"":"none";
+ if(S.si>=sk.length)S.si=0;$("#sku").innerHTML=skuOpts(m);$("#sku").value=S.si;$("#price").value=sk.length?sk[S.si][1]:"";renderDmg();}
+function renderDmg(){const it=damageItems(S.cat,curM(),(curSku()||[])[2]||0);if(!it.find(x=>x.k===S.dk))S.dk=it[0].k;
+ $("#dmgSeg").innerHTML=it.map(x=>`<button class="${x.k===S.dk?"on":""}" data-k="${x.k}">${x.l}</button>`).join("");renderResult();}
+
+function renderResult(){
+ const cat=S.cat,m=curM(),sk=curSku(),it=damageItems(cat,m,(sk||[])[2]||0).find(x=>x.k===S.dk);
+ const price=+$("#price").value||0,tier=jcTier(cat,price,m),fee=cat==="mac"?800:300;
+ const noTxt=`<div class="big">${fmt(it.o)}</div><div class="small">${it.oN?it.oN+"<br>":""}Apple 官網保固外預估價（含稅），以檢查為準<br>報價不修／拒修收檢測費 $${fee}</div>`;
+ let acBody=it.lost?`<div class="big">${fmt(it.o)}</div><div class="small">AppleCare+ 不承保遺失，需自費</div>`
+  :`<div class="big">${fmt(it.ac)}</div><div class="small">${it.k==="bat"?"電池容量低於 80% 免費更換<br>":""}${it.acN?it.acN+"<br>":""}</div>`;
+ acBody+=`<div class="small">專案費用：<b>${m.ac?fmt(m.ac):"價目表未列"}</b>（${AC_YEARS[cat]} 年）${m.acSrc?"<br>※ 價格取自 "+m.acSrc+" 價目表":""}${m.ac?"":"<br>AppleCare+ 價格請洽 0800-095-988"}</div>`;
+ let jcBody;
+ if(m.nojc)jcBody=`<div class="small">JustCare 價目表無此類商品</div>`;
+ else if(!price)jcBody=`<div class="small">請在上方輸入<b>購買金額</b>，以帶出級距與保費</div>`;
+ else if(!tier)jcBody=`<div class="small warn">此金額（${fmt(price)}）不在 JustCare 承保級距內</div>`;
+ else{
+  let main;
+  if(it.k==="bat")main=`<div class="big">$0</div><div class="small">限 Apple 品牌，第 13 個月起檢測容量低於 80%（不含 80%）可置換電池；第一年電池問題依 Apple 保固</div>`;
+  else if(it.lost)main=`<div class="big">${fmt(it.o)}</div><div class="small">一般遺失不在承保範圍；<b>竊盜損失</b>可依保單申請置換全新品</div>`;
+  else main=`<div class="small">維修自負額</div><div class="big">${tier[5]!=null?fmt(tier[5]):"—"}</div>
+   ${tier[5]==null?`<div class="small warn">價目表未列維修自負額，以保單條款為準</div>`:""}
+   <div class="small">置換新機自負額：<b>${fmt(tier[6])}</b></div>`;
+  jcBody=main+`<div class="small" style="margin-top:6px">級距 ≤ ${tier[0].toLocaleString()} 的保費：<br>${JC_PLANS.map(([l,i])=>`${l} <b>${tier[i]==null?"無":fmt(tier[i])}</b>`).join("<br>")}</div>`;
+ }
+ const save=(typeof it.o==="number"&&typeof it.ac==="number"&&!it.lost)?`<div class="save">💡 有 AppleCare+，這次修理可省 <b>${fmt(it.o-it.ac)}</b></div>`:"";
+ $("#result").innerHTML=`<h2>③ ${m.n}${sk&&m.sku.length>1?"（"+sk[0]+"）":""}：${it.l}</h2>
+  <div class="grid3"><div class="res no"><h3>❌ 沒保險</h3>${noTxt}</div><div class="res ac"><h3>🔵 AppleCare+</h3>${acBody}</div><div class="res jc"><h3>🟠 JustCare</h3>${jcBody}</div></div>${save}`;
+}
+
+function renderRates(){
+ const acRows=Object.entries(MODELS).map(([c,ms])=>ms.map(m=>`<tr><td>${CATS[c]}</td><td>${m.n}</td><td>${m.ac?fmt(m.ac)+(m.acSrc?"＊":""):"未列"}</td><td>${AC_YEARS[c]} 年</td></tr>`).join("")).join("");
+ const jc=(t,name)=>`<p><b>JustCare ${name}</b></p><div class="scroll"><table><tr><th>級距上限</th><th>月繳</th><th>1年</th><th>2年</th><th>3年</th><th>維修</th><th>置換</th></tr>${t.map(r=>`<tr>${r.map(v=>`<td>${v==null?"—":v.toLocaleString()}</td>`).join("")}</tr>`).join("")}</table></div>`;
+ $("#rateTables").innerHTML=`<p><b>AppleCare+</b></p><div class="scroll"><table><tr><th>類別</th><th>機型</th><th>費用</th><th>年限</th></tr>${acRows}</table></div><div class="small">＊ 取自 2026.07 版價目表（2026.09 版未列）</div>`+jc(JC_PHONE,"iPhone")+jc(JC_STD,"iPad／Watch／AirPods")+jc(JC_MAC,"Mac");
+}
+
+/* ---- 獎金 ---- */
+const KEY="ac-jc-bonus-v1";
+const load=()=>JSON.parse(localStorage.getItem(KEY)||"{}"),saveDB=d=>localStorage.setItem(KEY,JSON.stringify(d));
+const catOpts=()=>Object.entries(CATS).map(([k,v])=>`<option value="${k}">${v}</option>`).join("");
+const acRate=n=>n===0?0:n<=2?0.02:Math.min(n,6)/100;
+let draft=null; /* 目前表單可加入的紀錄 */
+
+function renderBForm(){
+ const t=$("#btype").value,f=$("#bform");
+ if(t==="ac")f.innerHTML=`<div class="row"><div><label>類別</label><select id="bc">${catOpts()}</select></div><div><label>機型</label><select id="bm"></select></div></div>`;
+ if(t==="jc")f.innerHTML=`<div class="row"><div><label>類別</label><select id="bc">${catOpts()}</select></div><div><label>機型</label><select id="bm"></select></div></div>
+  <label>規格／容量</label><select id="bs"></select>
+  <div class="row"><div><label>購買金額</label><input id="bprice" type="number" inputmode="numeric"></div><div><label>方案</label><select id="bp">${JC_PLANS.map(([l,i])=>`<option value="${i}">${l}</option>`).join("")}</select></div></div>`;
+ if(t==="ms")f.innerHTML=`<label>商品</label><select id="bk">${Object.keys(MYSETUP).map(k=>`<option>${k}</option>`).join("")}</select>`;
+ if(t==="sv")f.innerHTML=`<label>服務貨號</label><select id="bk">${Object.keys(SERVICE).map(k=>`<option>${k}</option>`).join("")}</select>`;
+ if(t==="ti")f.innerHTML=`<label>回收金額（廠商檢查後）</label><input id="bamt" type="number" inputmode="numeric">`;
+ const fillM=()=>{const c=$("#bc").value,ms=MODELS[c].map((m,i)=>[m,i]).filter(([m])=>t==="ac"?m.ac:!m.nojc);
+  $("#bm").innerHTML=ms.map(([m,i])=>`<option value="${i}">${m.n}${t==="ac"?"　"+fmt(m.ac):""}</option>`).join("");if(t==="jc")fillS();else prev();};
+ const fillS=()=>{const m=MODELS[$("#bc").value][+$("#bm").value];$("#bs").innerHTML=skuOpts(m);fillP();};
+ const fillP=()=>{const m=MODELS[$("#bc").value][+$("#bm").value],s=(m.sku||[])[+$("#bs").value];$("#bprice").value=s?s[1]:"";prev();};
+ const prev=()=>{draft=null;const p=$("#bprev");p.textContent="";
+  if(t==="ac"){const m=MODELS[$("#bc").value][+$("#bm").value];if(!m)return;
+   draft={t,label:"AC "+m.n,prem:m.ac};p.textContent=`保費 ${fmt(m.ac)}`;}
+  if(t==="jc"){const c=$("#bc").value,m=MODELS[c][+$("#bm").value],s=(m.sku||[])[+$("#bs").value],price=+$("#bprice").value,tr=jcTier(c,price,m),i=+$("#bp").value;
+   if(!price){p.textContent="請輸入購買金額";return;}
+   if(!tr){p.textContent="此金額不在 JustCare 級距內";return;}
+   if(tr[i]==null){p.textContent="此級距無此方案";return;}
+   draft={t,label:`JC ${m.n}${s?" "+s[0]:""} ${JC_PLANS[i-1][0]}（${fmt(price)}）`,prem:tr[i]};p.textContent=`保費 ${fmt(tr[i])}　→ 獎金 ${fmt1(tr[i]*0.1)}`;}
+  if(t==="ms"){const k=$("#bk").value;draft={t,label:"MySetup "+k,fix:MYSETUP[k]};p.textContent=`獎金 ${fmt(MYSETUP[k])}`;}
+  if(t==="sv"){const k=$("#bk").value;draft={t,label:k,fix:SERVICE[k]};p.textContent=`獎金 ${fmt(SERVICE[k])}`;}
+  if(t==="ti"){const a=+$("#bamt").value;if(!a)return;const v=a>=10000?a*0.01:100;draft={t,label:`舊換新 回收 ${fmt(a)}`,fix:v};p.textContent=`獎金 ${fmt1(v)}`;}
+ };
+ if(t==="ac"||t==="jc"){$("#bc").onchange=fillM;$("#bm").onchange=t==="jc"?fillS:prev;}
+ if(t==="jc"){$("#bs").onchange=fillP;$("#bprice").oninput=prev;$("#bp").onchange=prev;}
+ if(t==="ms"||t==="sv")$("#bk").onchange=prev;
+ if(t==="ti")$("#bamt").oninput=prev;
+ (t==="ac"||t==="jc")?fillM():prev();
+}
+function addRec(){
+ if(!draft)return alert("請先完成上方資料");
+ const mo=$("#month").value,d=load(),r={...draft,note:$("#bnote").value.trim(),on:true};
+ (d[mo]=d[mo]||[]).push(r);saveDB(d);$("#bnote").value="";renderBList();
+}
+function calc(list){
+ const acN=list.filter(r=>r.on&&r.t==="ac").length,rate=acRate(acN);
+ const val=r=>r.t==="ac"?r.prem*rate:r.t==="jc"?r.prem*0.1:r.fix;
+ return{acN,rate,val};
+}
+function renderBList(){
+ const mo=$("#month").value,list=load()[mo]||[],{acN,rate,val}=calc(list);
+ $("#blist").innerHTML=list.length?list.map((r,i)=>`<div class="rec"><input type="checkbox" data-i="${i}" ${r.on?"checked":""}><div>${r.label}${r.prem?` <span class="small">保費 ${fmt(r.prem)}</span>`:""}${r.note?`<div class="small">${r.note}</div>`:""}</div><div class="amt">${r.on?fmt1(val(r)):"—"}</div><button class="x" data-d="${i}" aria-label="刪除">✕</button></div>`).join(""):`<div class="small">尚無紀錄</div>`;
+ const on=list.filter(r=>r.on),sum=ts=>on.filter(r=>ts.includes(r.t)).reduce((a,r)=>a+val(r),0),prem=t=>on.filter(r=>r.t===t).reduce((a,r)=>a+r.prem,0);
+ const tot=sum(["ac","jc","ms","sv","ti"]);
+ const next=acN>0&&acN<6?`再賣 ${acN<=2?3-acN:1} 套 AC，比例升到 ${acN<=2?3:acN+1}%`:"";
+ $("#bsum").innerHTML=`<div class="scroll"><table>
+  <tr><td>AppleCare+ ${acN} 套（${(rate*100).toFixed(0)}%）</td><td>保費 ${fmt(prem("ac"))}</td><td><b>${fmt1(sum(["ac"]))}</b></td></tr>
+  <tr><td>JustCare（10%）</td><td>保費 ${fmt(prem("jc"))}</td><td><b>${fmt1(sum(["jc"]))}</b></td></tr>
+  <tr><td>MySetup／服務貨號／舊換新</td><td></td><td><b>${fmt1(sum(["ms","sv","ti"]))}</b></td></tr></table></div>
+  <div class="small" style="margin-top:8px">${next}</div>
+  <div class="total">${fmt1(tot)}</div><div class="small" style="text-align:right">${mo} 預估獎金</div>`;
+}
+function copyMonth(){
+ const mo=$("#month").value,list=(load()[mo]||[]).filter(r=>r.on),{acN,rate,val}=calc(load()[mo]||[]);
+ if(!list.length)return alert("本月沒有已勾選的紀錄");
+ const lines=list.map((r,i)=>`${i+1}. ${r.label}${r.note?"（"+r.note+"）":""}　${fmt1(val(r))}`);
+ const tot=list.reduce((a,r)=>a+val(r),0);
+ const txt=`【${mo} 保固獎金明細】\nAC ${acN} 套，比例 ${(rate*100).toFixed(0)}%\n${lines.join("\n")}\n合計：${fmt1(tot)}`;
+ (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>alert("已複製"),()=>prompt("請長按複製：",txt));
+}
+
+/* ---- 維修據點 ---- */
+function renderCity(){
+ const n=c=>CENTERS.filter(x=>x.c===c).length;
+ $("#city").innerHTML=`<option value="">全部縣市（${CENTERS.length}）</option>`+CITY_ORDER.map(c=>`<option value="${c}">${c}（${n(c)}）</option>`).join("");
+ $("#city").value="高雄市";renderLoc();
+}
+function renderLoc(){
+ const c=$("#city").value,list=CENTERS.filter(x=>!c||x.c===c);
+ $("#locRes").innerHTML=list.map(x=>`<div class="loc"><span class="tag">${x.b}</span><b>${x.n}</b>
+  <div class="small">📍 <a href="https://maps.apple.com/?q=${encodeURIComponent(x.a)}" target="_blank" rel="noopener">${x.a}</a><br>
+  ☎️ <a href="tel:${x.t.replace(/\D/g,"")}">${x.t}</a>${x.h?"<br>🕒 "+x.h:""}</div></div>`).join("")||`<div class="small">此縣市暫無資料</div>`;
+}
+
+/* ---- 事件 ---- */
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button,.tab").forEach(e=>e.classList.remove("on"));b.classList.add("on");$("#"+b.dataset.t).classList.add("on");scrollTo(0,0);});
+$("#catSeg").onclick=e=>{const c=e.target.dataset.c;if(!c)return;S.cat=c;S.mi=c==="iphone"?2:0;S.si=0;S.dk=null;renderCats();renderModels();};
+$("#model").onchange=e=>{S.mi=+e.target.value;S.si=0;renderSku();};
+$("#sku").onchange=e=>{S.si=+e.target.value;renderSku();};
+$("#dmgSeg").onclick=e=>{const k=e.target.dataset.k;if(!k)return;S.dk=k;renderDmg();};
+$("#price").oninput=renderResult;
+$("#btype").onchange=renderBForm;$("#badd").onclick=addRec;$("#month").onchange=renderBList;$("#bcopy").onclick=copyMonth;
+$("#blist").onclick=e=>{const d=load(),mo=$("#month").value;
+ if(e.target.dataset.i!=null){d[mo][e.target.dataset.i].on=e.target.checked;saveDB(d);renderBList();}
+ if(e.target.dataset.d!=null){if(!confirm("刪除這筆紀錄？"))return;d[mo].splice(+e.target.dataset.d,1);saveDB(d);renderBList();}};
+$("#bclear").onclick=()=>{if(!confirm("確定清除本月紀錄？"))return;const d=load();delete d[$("#month").value];saveDB(d);renderBList();};
+$("#city").onchange=renderLoc;
+
+const now=new Date();$("#month").value=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}`;
+renderCats();renderModels();renderRates();renderBForm();renderBList();renderCity();
+if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body>
+</html>
