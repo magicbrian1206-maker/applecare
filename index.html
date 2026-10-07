@@ -16,7 +16,7 @@
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,"PingFang TC","Noto Sans TC",sans-serif;background:var(--bg);color:var(--tx);-webkit-text-size-adjust:100%}
 a{color:var(--blue)}
 header{padding:calc(env(safe-area-inset-top) + 18px) 18px 6px;text-align:center}
-h1{margin:0;font-size:24px}.slogan{color:var(--sub);font-size:14px;margin-top:4px}
+h1{margin:0;font-size:24px}.slogan{color:var(--sub);font-size:14px;margin-top:4px;display:flex;justify-content:center;flex-wrap:wrap;gap:2px 16px}
 nav{position:sticky;top:0;z-index:9;display:flex;gap:6px;padding:10px 12px;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 nav button{flex:1;border:0;border-radius:12px;padding:10px 4px;font-size:15px;background:var(--card);color:var(--tx)}nav button.on{background:var(--blue);color:#fff;font-weight:600}
 main{max-width:860px;margin:0 auto;padding:6px 12px calc(env(safe-area-inset-bottom) + 60px)}.tab{display:none}.tab.on{display:block}
@@ -45,7 +45,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{border-bottom:1px
 </style>
 </head>
 <body>
-<header><h1>🍎 蘋果保固方案</h1><div class="slogan">機不可失，「保」不可少<br>螢幕會破，荷包不破</div></header>
+<header><h1>🍎 蘋果保固方案</h1><div class="slogan"><span>機不可失，「保」不可少</span><span>螢幕會破，荷包不破</span></div></header>
 <nav><button class="on" data-t="cmp">🛡️ 方案比較</button><button data-t="bonus">💰 獎金試算</button><button data-t="loc">📍 維修據點</button></nav>
 <main>
 
@@ -89,15 +89,21 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{border-bottom:1px
   <li>優先支援（線上對談／電話）。</li>
  </ul></details>
  <details><summary>🟠 JustCare 權益與條款</summary><ul>
-  <li>依<b>購買金額級距</b>計費：月繳（3 年保）、一次繳 1／2／3 年。</li>
-  <li>意外損壞每年最多 3 次，三年最高 9 次。</li>
+  <li>承保：美商安達產物保險（Chubb），由安盛保險代理人代理銷售。服務專線 <a href="tel:0800608989">0800-608-989</a>。</li>
+  <li>依<b>產品建議售價</b>級距計費（不論實際折扣）：月繳（3 年期）、一次繳 1／2／3 年期。</li>
+  <li>保障項目：<b>意外損壞</b>（摔裂、泡水、輾毀、破損）、<b>竊盜損失全球保障</b>（竊盜、搶奪、強盜所致整機滅失）。</li>
+  <li><b>手機、平板、手錶、AirPods：原機維修自負額 $0</b>；無法原機維修或維修費高於置換費用時，以置換理賠並收置換自負額。</li>
+  <li><b>Apple 筆記型電腦</b>：維修自負額 $3,000／$4,000／$5,000，置換自負額 $5,000／$9,000／$10,000（依級距）；119,901–150,000 級距無三年期。</li>
+  <li><b>第二年起硬體保固</b>（二年期／三年期，<b>筆記型電腦除外</b>）：原廠保固以外之材料或製程瑕疵（不含電池故障）。</li>
+  <li><b>桌上型電腦（iMac、Mac mini、Mac Studio）與顯示器不在承保範圍</b>。</li>
+  <li>每年最多理賠 3 次，三年最高 9 次。</li>
   <li>第一年（0–12M）：理賠上限 3 次（意外損壞及竊盜損失），達 3 次後持續付費，保單仍有效。</li>
   <li>第二年（13–24M）：上限 3 次（意外損壞、第二年起故障、竊盜損失、Apple 品牌電池置換），達 3 次後保單仍有效。</li>
   <li>第三年（25–36M）：上限 3 次，<b>達 3 次後保單即行終止</b>。</li>
-  <li>理賠方式包含免費原廠維修與付費置換服務。</li>
+  <li>理賠方式由安達產險依毀損狀況認定，<b>以原機維修為原則</b>。</li>
   <li>置換：意外損壞 Apple 換整新機、非 Apple 換全新機；<b>竊盜損失一律換全新機</b>。</li>
-  <li>電池置換（限 Apple 品牌）：經指定維修中心檢測容量<b>低於 80%（不含 80%）</b>。</li>
-  <li>Mac 維修自負額 $3,000／$4,000、置換自負額 $5,000／$9,000；109,901–119,900 級距限 MBP 16"，無三年方案。</li>
+  <li>電池置換（限 Apple 品牌，<b>二年期／三年期</b>）：經指定維修中心檢測容量<b>低於 80%（不含 80%）</b>。</li>
+  <li>本商品預定費用率 49.8%。內容僅供參考，悉依保單條款為準（115.10.7 安達商字第 1150000737～1150000739 號函備查）。</li>
  </ul></details>
  <details><summary>📋 方案費率總表</summary><div id="rateTables" style="padding-bottom:14px"></div></details>
 </section>
@@ -192,9 +198,9 @@ const MAC = [
  {n:"MacBook Air 15 吋（M5）",ac:7790,t:"laptop",bat:6390,sku:[["16GB/512GB",49900],["16GB/1TB",60400],["24GB/1TB",67400]]},
  {n:"MacBook Pro 14 吋（M5 系列）",ac:9490,t:"laptop",bat:7410,sku:[["M5 16GB/1TB",64900],["M5 24GB/1TB",71900],["M5 32GB/1TB",78900],["M5 Pro 15核 24GB/1TB",84900],["M5 Pro 15核 24GB/2TB",102400],["M5 Pro 18核 24GB/2TB",109900],["M5 Max 36GB/2TB",139900]]},
  {n:"MacBook Pro 16 吋（M5 系列）",ac:13490,t:"laptop",bat:8090,mbp16:true,sku:[["M5 Pro 24GB/1TB",99900],["M5 Pro 48GB/1TB",120900],["M5 Max 32核 36GB/2TB",144900],["M5 Max 40核 48GB/2TB",169900]]},
- {n:"iMac 24 吋（M4）",ac:5790,t:"imac",sku:[["8核 16GB/256GB",49900],["10核 16GB/256GB",57900],["10核 16GB/512GB",64900],["10核 24GB/512GB",71900],["10核 16GB/256GB 奈米紋理",64900]]},
- {n:"Mac mini（2026）",ac:3490,t:"desktop",sku:[["M6 16GB/256GB",29900],["M6 16GB/512GB",36900],["M6 24GB/512GB",43900],["M5 Pro 24GB/512GB",59900]]},
- {n:"Mac Studio（2026）",ac:5790,t:"desktop",sku:[["M5 Max 36GB/512GB",84900],["M5 Ultra 96GB/1TB",199900]]},
+ {n:"iMac 24 吋（M4）",ac:5790,t:"imac",nojc:true,sku:[["8核 16GB/256GB",49900],["10核 16GB/256GB",57900],["10核 16GB/512GB",64900],["10核 24GB/512GB",71900],["10核 16GB/256GB 奈米紋理",64900]]},
+ {n:"Mac mini（2026）",ac:3490,t:"desktop",nojc:true,sku:[["M6 16GB/256GB",29900],["M6 16GB/512GB",36900],["M6 24GB/512GB",43900],["M5 Pro 24GB/512GB",59900]]},
+ {n:"Mac Studio（2026）",ac:5790,t:"desktop",nojc:true,sku:[["M5 Max 36GB/512GB",84900],["M5 Ultra 96GB/1TB",199900]]},
  {n:"Studio Display（2026）",ac:4990,t:"display",nojc:true,sku:[]},
  {n:"Studio Display XDR",ac:9990,t:"display",nojc:true,sku:[]}
 ];
@@ -219,9 +225,9 @@ const AIRPODS = [
 const MODELS = {iphone:IPHONE,ipad:IPAD,mac:MAC,watch:WATCH,airpods:AIRPODS};
 
 /* JustCare 級距：[上限, 月繳, 1年, 2年, 3年, 維修自負額, 置換自負額]；null = 無此方案／未列 */
-const JC_PHONE = [[10000,98,1250,2250,3370,null,1000],[20000,198,2480,4580,6690,null,2000],[35000,288,3450,6220,9310,null,3000],[55000,358,4290,7720,11580,null,4500],[70000,458,5490,9880,14820,null,5500],[95000,548,5900,11800,17600,null,7000]];
-const JC_STD = [[8000,69,700,1300,1890,null,1000],[20000,119,1200,2200,3240,null,2000],[40000,189,1900,3400,5130,null,3000],[75000,239,2400,4300,6480,null,4000],[95000,349,3500,6500,9300,null,5500]];
-const JC_MAC = [[50000,255,2780,4990,6990,3000,5000],[109900,520,5680,9990,12490,4000,9000],[119900,520,5680,9900,null,4000,9000]];
+const JC_PHONE = [[10000,98,1250,2250,3370,0,1000],[20000,198,2480,4580,6690,0,2000],[35000,288,3450,6220,9310,0,3000],[55000,358,4290,7720,11580,0,4500],[70000,458,5490,9880,14820,0,5500],[95000,548,5900,11800,17600,0,7000],[120000,648,7680,13580,21380,0,7000]];
+const JC_STD = [[8000,69,700,1300,1890,0,1000],[20000,119,1200,2200,3240,0,2000],[40000,189,1900,3400,5130,0,3000],[75000,239,2400,4300,6480,0,4000],[95000,349,3500,6500,9300,0,5500]];
+const JC_MAC = [[50000,255,2780,4990,6990,3000,5000],[119900,520,5680,9990,12490,4000,9000],[150000,740,7780,13480,null,5000,10000]];
 const JC_TABLE = {iphone:JC_PHONE,ipad:JC_STD,watch:JC_STD,airpods:JC_STD,mac:JC_MAC};
 const JC_PLANS = [["月繳（3年保）",1],["一次繳 1 年",2],["一次繳 2 年",3],["一次繳 3 年",4]];
 
@@ -271,7 +277,6 @@ const fmt=n=>typeof n==="number"?"$"+n.toLocaleString():n;
 const fmt1=n=>"$"+(Math.round(n*10)/10).toLocaleString();
 function jcTier(cat,price,m){
  if(!price||!m||m.nojc)return null;
- if(cat==="mac"&&price>109900&&!m.mbp16)return null;
  return JC_TABLE[cat].find(r=>price<=r[0])||null;
 }
 
@@ -321,16 +326,15 @@ function renderResult(){
   :`<div class="big">${fmt(it.ac)}</div><div class="small">${it.k==="bat"?"電池容量低於 80% 免費更換<br>":""}${it.acN?it.acN+"<br>":""}</div>`;
  acBody+=`<div class="small">專案費用：<b>${m.ac?fmt(m.ac):"價目表未列"}</b>（${AC_YEARS[cat]} 年）${m.acSrc?"<br>※ 價格取自 "+m.acSrc+" 價目表":""}${m.ac?"":"<br>AppleCare+ 價格請洽 0800-095-988"}</div>`;
  let jcBody;
- if(m.nojc)jcBody=`<div class="small">JustCare 價目表無此類商品</div>`;
+ if(m.nojc)jcBody=`<div class="small">JustCare 不承保此類商品（僅承保手機、平板、手錶、AirPods、筆記型電腦）</div>`;
  else if(!price)jcBody=`<div class="small">此商品無官方售價資料</div>`;
  else if(!tier)jcBody=`<div class="small warn">此金額（${fmt(price)}）不在 JustCare 承保級距內</div>`;
  else{
   let main;
-  if(it.k==="bat")main=`<div class="big">$0</div><div class="small">限 Apple 品牌，第 13 個月起檢測容量低於 80%（不含 80%）可置換電池；第一年電池問題依 Apple 保固</div>`;
+  if(it.k==="bat")main=`<div class="big">$0</div><div class="small">限 Apple 品牌，<b>僅二年期／三年期</b>適用；經指定維修中心檢測容量低於 80%（不含 80%）可原機置換電池。一年期不含此項</div>`;
   else if(it.lost)main=`<div class="big">${fmt(it.o)}</div><div class="small">一般遺失不在承保範圍；<b>竊盜損失</b>可依保單申請置換全新品</div>`;
-  else main=`<div class="small">維修自負額</div><div class="big">${fmt(tier[5]!=null?tier[5]:tier[6])}</div>
-   ${tier[5]==null?`<div class="small">價目表未單列維修自負額，以最高自負額計</div>`:""}
-   <div class="small">置換新機自負額：<b>${fmt(tier[6])}</b></div>`;
+  else main=`<div class="small">原機維修自負額</div><div class="big">${fmt(tier[5])}</div>
+   <div class="small">${tier[5]===0?"可原機維修<b>不收費</b><br>":""}無法維修或維修費高於置換費時改為置換，置換自負額：<b>${fmt(tier[6])}</b>${cat==="mac"?"":"（Apple 換整新機）"}</div>`;
   jcBody=main+`<div class="small" style="margin-top:6px">級距 ≤ ${tier[0].toLocaleString()} 的保費：<br>${JC_PLANS.map(([l,i])=>`${l} <b>${tier[i]==null?"無":fmt(tier[i])}</b>`).join("<br>")}</div>`;
  }
  const save=(typeof it.o==="number"&&typeof it.ac==="number"&&!it.lost)?`<div class="save">💡 有 AppleCare+，這次修理可省 <b>${fmt(it.o-it.ac)}</b></div>`:"";
