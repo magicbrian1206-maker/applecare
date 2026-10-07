@@ -37,7 +37,7 @@ details li b{color:var(--no)}
 .vs{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
 .vs th,.vs td{white-space:normal;vertical-align:top;padding:9px 8px;border-bottom:1px solid var(--line);line-height:1.5}
 .vs th{font-size:14px;color:#fff;text-align:center}.vs th.a{background:var(--ac);border-radius:10px 0 0 0}.vs th.j{background:var(--jc);border-radius:0 10px 0 0}
-.vs td:first-child{font-weight:600;color:var(--sub);width:22%}.vs td.win{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+.vs td:first-child{font-weight:600;color:var(--sub);width:22%}.vs td.win{color:var(--blue);font-weight:700}
 .fit{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}@media(max-width:640px){.fit{grid-template-columns:1fr}}
 .fit div{border-radius:12px;padding:12px;font-size:13px;line-height:1.7}.fit .a{border:2px solid var(--ac)}.fit .j{border:2px solid var(--jc)}
 .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -158,7 +158,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{border-bottom:1px
  </div>
 </section>
 
-<div class="foot">版本 <span id="build">20261007-203039</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
+<div class="foot">版本 <span id="build">20261007-204242</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
 </main>
 
 <script>
@@ -368,7 +368,7 @@ const VS=[
  ["維修","Apple 原廠","安達認定",""]
 ];
 function renderVS(cat,m,sk,price,tier){
- const rows=VS.map(([k,a,j,w])=>`<tr><td>${k}</td><td class="${w==="a"?"win":""}">${w==="a"?"✅ ":""}${a}</td><td class="${w==="j"?"win":""}">${w==="j"?"✅ ":""}${j}</td></tr>`).join("");
+ const rows=VS.map(([k,a,j,w])=>`<tr><td>${k}</td><td class="${w==="a"?"win":""}">${a}</td><td class="${w==="j"?"win":""}">${j}</td></tr>`).join("");
  let ex="";
  const name=m.n+(sk&&m.sku.length>1?"（"+sk[0]+"）":"");
  const acY=AC_YEARS[cat];
@@ -379,7 +379,7 @@ function renderVS(cat,m,sk,price,tier){
   <tr><th>方案</th><th>總保費</th><th>保障</th><th>平均每年</th></tr>
   ${r.map(([l,t,y,n])=>`<tr><td>${l}${n?`<div class="small">${n}</div>`:""}</td><td><b>${fmt(t)}</b></td><td>${y} 年</td><td>${fmt(Math.round(t/y))}</td></tr>`).join("")}</table></div>`;
  $("#vs").innerHTML=`<div class="scroll"><table class="vs"><tr><th style="background:none"></th><th class="a">🔵 AppleCare+</th><th class="j">🟠 JustCare</th></tr>${rows}</table></div>
- <div class="small" style="margin-top:6px">✅ 較有優勢　＊ 依各保單條款為準</div>`;
+ <div class="small" style="margin-top:6px"><b style="color:var(--blue)">藍字</b>＝較有優勢　＊ 依各保單條款為準</div>`;
 }
 /* ---- 獎金 ---- */
 const KEY="ac-jc-bonus-v1";
