@@ -151,7 +151,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{border-bottom:1px
  </div>
 </section>
 
-<div class="foot">版本 <span id="build">20261007-193835</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
+<div class="foot">版本 <span id="build">20261007-201003</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
 </main>
 
 <script>
@@ -356,6 +356,9 @@ const catOpts=()=>Object.entries(CATS).map(([k,v])=>`<option value="${k}">${v}</
 const acRate=n=>n===0?0:n<=2?0.02:Math.min(n,6)/100;
 let draft=null; /* 目前表單可加入的紀錄 */
 
+/* 記住上一次的選擇，切換類型時沿用 */
+const BF={c:"iphone",m:null,s:0,p:"1"};
+const MS_CAT={Mac:"mac",iPad:"ipad",iPhone:"iphone","Apple Watch":"watch"};
 function renderBForm(){
  const t=$("#btype").value,f=$("#bform");
  if(t==="ac")f.innerHTML=`<div class="row"><div><label>類別</label><select id="bc">${catOpts()}</select></div><div><label>機型</label><select id="bm"></select></div></div>`;
@@ -365,9 +368,13 @@ function renderBForm(){
  if(t==="ms")f.innerHTML=`<label>商品</label><select id="bk">${Object.keys(MYSETUP).map(k=>`<option>${k}</option>`).join("")}</select>`;
  if(t==="sv")f.innerHTML=`<label>服務貨號</label><select id="bk">${Object.keys(SERVICE).map(k=>`<option>${k}</option>`).join("")}</select>`;
  if(t==="ti")f.innerHTML=`<label>回收金額（廠商檢查後）</label><input id="bamt" type="number" inputmode="numeric">`;
+ const has=(sel,v)=>[...sel.options].some(o=>o.value===String(v));
  const fillM=()=>{const c=$("#bc").value,ms=MODELS[c].map((m,i)=>[m,i]).filter(([m])=>t==="ac"?m.ac:!m.nojc);
-  $("#bm").innerHTML=ms.map(([m,i])=>`<option value="${i}">${m.n}${t==="ac"?"　"+fmt(m.ac):""}</option>`).join("");if(t==="jc")fillS();else prev();};
- const fillS=()=>{const m=MODELS[$("#bc").value][+$("#bm").value];$("#bs").innerHTML=skuOpts(m);fillP();};
+  $("#bm").innerHTML=ms.map(([m,i])=>`<option value="${i}">${m.n}${t==="ac"?"　"+fmt(m.ac):""}</option>`).join("");
+  if(BF.m!=null&&has($("#bm"),BF.m))$("#bm").value=BF.m;
+  if(t==="jc")fillS();else prev();};
+ const fillS=()=>{const m=MODELS[$("#bc").value][+$("#bm").value];$("#bs").innerHTML=skuOpts(m);
+  if(has($("#bs"),BF.s))$("#bs").value=BF.s;fillP();};
  const fillP=()=>{const m=MODELS[$("#bc").value][+$("#bm").value],s=(m.sku||[])[+$("#bs").value];$("#bprice").value=s?s[1]:"";prev();};
  const prev=()=>{draft=null;const p=$("#bprev");p.textContent="";
   if(t==="ac"){const m=MODELS[$("#bc").value][+$("#bm").value];if(!m)return;
@@ -381,11 +388,17 @@ function renderBForm(){
   if(t==="sv"){const k=$("#bk").value;draft={t,label:k,fix:SERVICE[k]};p.textContent=`獎金 ${fmt(SERVICE[k])}`;}
   if(t==="ti"){const a=+$("#bamt").value;if(!a)return;const v=a>=10000?a*0.01:100;draft={t,label:`舊換新 回收 ${fmt(a)}`,fix:v};p.textContent=`獎金 ${fmt1(v)}`;}
  };
- if(t==="ac"||t==="jc"){$("#bc").onchange=fillM;$("#bm").onchange=t==="jc"?fillS:prev;}
- if(t==="jc"){$("#bs").onchange=fillP;$("#bp").onchange=prev;}
- if(t==="ms"||t==="sv")$("#bk").onchange=prev;
+ if(t==="ac"||t==="jc"){
+  $("#bc").value=BF.c;
+  $("#bc").onchange=()=>{BF.c=$("#bc").value;BF.m=null;BF.s=0;fillM();};
+  $("#bm").onchange=()=>{BF.m=$("#bm").value;BF.s=0;t==="jc"?fillS():prev();};
+ }
+ if(t==="jc"){$("#bp").value=BF.p;$("#bs").onchange=()=>{BF.s=$("#bs").value;fillP();};$("#bp").onchange=()=>{BF.p=$("#bp").value;prev();};}
+ if(t==="ms"){const k=Object.keys(MS_CAT).find(k=>MS_CAT[k]===BF.c);if(k)$("#bk").value=k;
+  $("#bk").onchange=()=>{const c=MS_CAT[$("#bk").value];if(c!==BF.c){BF.c=c;BF.m=null;BF.s=0;}prev();};}
+ if(t==="sv")$("#bk").onchange=prev;
  if(t==="ti")$("#bamt").oninput=prev;
- (t==="ac"||t==="jc")?fillM():prev();
+ if(t==="ac"||t==="jc"){fillM();BF.m=$("#bm").value;}else prev();
 }
 function addRec(){
  if(!draft)return alert("請先完成上方資料");
