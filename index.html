@@ -34,6 +34,12 @@ select,input{width:100%;font-size:16px;padding:10px;border:1px solid var(--line)
 details{background:var(--card);border-radius:var(--r);margin:10px 0;padding:0 16px}summary{padding:14px 0;font-weight:600;cursor:pointer}
 details ul{margin:0 0 14px;padding-left:20px;line-height:1.7;font-size:14px}
 details li b{color:var(--no)}
+.vs{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
+.vs th,.vs td{white-space:normal;vertical-align:top;padding:9px 8px;border-bottom:1px solid var(--line);line-height:1.5}
+.vs th{font-size:14px;color:#fff;text-align:center}.vs th.a{background:var(--ac);border-radius:10px 0 0 0}.vs th.j{background:var(--jc);border-radius:0 10px 0 0}
+.vs td:first-child{font-weight:600;color:var(--sub);width:22%}.vs td.win{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+.fit{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}@media(max-width:640px){.fit{grid-template-columns:1fr}}
+.fit div{border-radius:12px;padding:12px;font-size:13px;line-height:1.7}.fit .a{border:2px solid var(--ac)}.fit .j{border:2px solid var(--jc)}
 .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
 table{width:100%;border-collapse:collapse;font-size:13px}th,td{border-bottom:1px solid var(--line);padding:7px 4px;text-align:left;white-space:nowrap}th{color:var(--sub);font-weight:500}
 .row{display:flex;gap:8px}.row>*{flex:1;min-width:0}.btn{border:0;border-radius:12px;padding:12px;font-size:16px;background:var(--blue);color:#fff;width:100%;margin-top:12px;display:block;text-align:center;text-decoration:none}
@@ -65,6 +71,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{border-bottom:1px
  </div>
  <div class="card" id="result"></div>
 
+ <details><summary>⚖️ AppleCare+ vs JustCare 優劣比較</summary><div id="vs" style="padding-bottom:14px"></div></details>
  <details><summary>🔍 檢測費 · 保固內外 · 送修注意</summary><ul>
   <li><b>檢測處理費（燦坤送修）</b>：iPhone／iPad／Watch／AirPods／HomePod <b>$300</b>；Mac <b>$800</b>。適用：保固外、意外損壞報價不修、拒絕維修。</li>
   <li><b>保固內</b>：Apple 一年有限保固，只涵蓋<b>製造瑕疵</b>；意外損壞（摔、壓、進液）不在保固範圍內。</li>
@@ -151,7 +158,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{border-bottom:1px
  </div>
 </section>
 
-<div class="foot">版本 <span id="build">20261007-201822</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
+<div class="foot">版本 <span id="build">20261007-202821</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
 </main>
 
 <script>
@@ -341,6 +348,7 @@ function renderResult(){
  const save=(typeof it.o==="number"&&typeof it.ac==="number"&&!it.lost)?`<div class="save">💡 有 AppleCare+，這次修理可省 <b>${fmt(it.o-it.ac)}</b></div>`:"";
  $("#result").innerHTML=`<h2>③ ${m.n}${sk&&m.sku.length>1?"（"+sk[0]+"）":""}：${it.l}</h2>
   <div class="grid3"><div class="res no"><h3>❌ 沒保險</h3>${noTxt}</div><div class="res ac"><h3>🔵 AppleCare+</h3>${acBody}</div><div class="res jc"><h3>🟠 JustCare</h3>${jcBody}</div></div>${save}`;
+ renderVS(cat,m,sk,price,tier);
 }
 
 function renderRates(){
@@ -349,6 +357,30 @@ function renderRates(){
  $("#rateTables").innerHTML=`<p><b>AppleCare+</b></p><div class="scroll"><table><tr><th>類別</th><th>機型</th><th>費用</th><th>年限</th></tr>${acRows}</table></div><div class="small">＊ 取自 2026.07 版價目表（2026.09 版未列）</div>`+jc(JC_PHONE,"iPhone")+jc(JC_STD,"iPad／Watch／AirPods")+jc(JC_MAC,"Mac");
 }
 
+
+/* ---- AC vs JC 優劣比較（w：a=AC 較優、j=JC 較優） ---- */
+const VS=[
+ ["維修費","$900 起","$0（筆電除外）","j"],
+ ["理賠次數","不限次數","每年 3 次","a"],
+ ["被偷被搶","不保","保","j"],
+ ["電池","免費換","二／三年期才有","a"],
+ ["付款","一次付清","可月繳","j"],
+ ["維修","Apple 原廠","安達認定",""]
+];
+function renderVS(cat,m,sk,price,tier){
+ const rows=VS.map(([k,a,j,w])=>`<tr><td>${k}</td><td class="${w==="a"?"win":""}">${w==="a"?"✅ ":""}${a}</td><td class="${w==="j"?"win":""}">${w==="j"?"✅ ":""}${j}</td></tr>`).join("");
+ let ex="";
+ const name=m.n+(sk&&m.sku.length>1?"（"+sk[0]+"）":"");
+ const acY=AC_YEARS[cat];
+ const r=[];
+ if(m.ac)r.push(["🔵 AppleCare+",m.ac,acY]);
+ if(tier){[["🟠 JC 月繳（3 年）",tier[1]*36,3,`${fmt(tier[1])} × 36 期`],["🟠 JC 一次繳 1 年",tier[2],1],["🟠 JC 一次繳 2 年",tier[3],2],["🟠 JC 一次繳 3 年",tier[4],3]].forEach(x=>{if(x[1]!=null&&!isNaN(x[1]))r.push(x);});}
+ if(r.length)ex=`<p style="margin:14px 0 6px"><b style="color:var(--tx)">以 ${name} 試算保費</b></p><div class="scroll"><table>
+  <tr><th>方案</th><th>總保費</th><th>保障</th><th>平均每年</th></tr>
+  ${r.map(([l,t,y,n])=>`<tr><td>${l}${n?`<div class="small">${n}</div>`:""}</td><td><b>${fmt(t)}</b></td><td>${y} 年</td><td>${fmt(Math.round(t/y))}</td></tr>`).join("")}</table></div>`;
+ $("#vs").innerHTML=`<div class="scroll"><table class="vs"><tr><th style="background:none"></th><th class="a">🔵 AppleCare+</th><th class="j">🟠 JustCare</th></tr>${rows}</table></div>
+ <div class="small" style="margin-top:6px">✅ 較有優勢　＊ 依各保單條款為準</div>`;
+}
 /* ---- 獎金 ---- */
 const KEY="ac-jc-bonus-v1";
 const load=()=>JSON.parse(localStorage.getItem(KEY)||"{}"),saveDB=d=>localStorage.setItem(KEY,JSON.stringify(d));

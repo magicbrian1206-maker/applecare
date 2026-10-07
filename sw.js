@@ -1,4 +1,4 @@
-const C="apple-care-20261007-201822";
+const C="apple-care-20261007-202821";
 const FILES=["./","index.html","manifest.json","icon.png"];
 self.addEventListener("install",e=>{self.skipWaiting();e.waitUntil(caches.open(C).then(c=>c.addAll(FILES.map(f=>new Request(f,{cache:"reload"})))))});
 self.addEventListener("activate",e=>e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
