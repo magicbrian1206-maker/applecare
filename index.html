@@ -22,6 +22,7 @@ nav button{flex:1;border:0;border-radius:12px;padding:10px 4px;font-size:15px;ba
 main{max-width:860px;margin:0 auto;padding:6px 12px calc(env(safe-area-inset-bottom) + 60px)}.tab{display:none}.tab.on{display:block}
 .card{background:var(--card);border-radius:var(--r);padding:16px;margin:12px 0}
 h2{font-size:17px;margin:0 0 10px}label{font-size:13px;color:var(--sub);display:block;margin:10px 0 4px}
+input[readonly]{opacity:.75}
 select,input{width:100%;font-size:16px;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--tx);-webkit-appearance:none;appearance:none}
 .seg{display:flex;flex-wrap:wrap;gap:6px}.seg button{border:1px solid var(--line);background:var(--bg);color:var(--tx);border-radius:999px;padding:8px 14px;font-size:14px}
 .seg button.on{background:var(--tx);color:var(--bg);border-color:var(--tx)}
@@ -54,8 +55,8 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{border-bottom:1px
   <h2>① 選擇商品</h2>
   <div class="seg" id="catSeg"></div>
   <label>機型</label><select id="model"></select>
-  <div id="skuWrap"><label>規格／容量（自動帶入售價）</label><select id="sku"></select></div>
-  <label>購買金額（可自行修改，例如教育價；JustCare 依此金額判斷級距）</label><input id="price" type="number" inputmode="numeric" placeholder="請輸入金額">
+  <div id="skuWrap"><label>規格／容量</label><select id="sku"></select>
+  <label>官方售價（保險一律以原價計算，不含任何折扣）</label><input id="price" type="number" readonly tabindex="-1"></div>
  </div>
  <div class="card">
   <h2>② 選擇損壞項目</h2>
@@ -79,7 +80,9 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{border-bottom:1px
   <li>電池容量低於 80% 可<b>免費</b>更換。</li>
   <li>iPhone：螢幕或機背玻璃 $900；其他意外損壞 $3,200。</li>
   <li>iPhone Duo：外保護層 $690、正面螢幕 $900、機背玻璃 $900、內螢幕 $3,200、其他 $3,200。</li>
-  <li>iPad：僅螢幕 $900、其他 $3,200；Apple Pencil 與鍵盤 $900（配件需自行致電 Apple 客服加保）。</li>
+  <li>iPad：僅螢幕 $900、其他 $3,200。</li>
+  <li><b>iPad 配件</b>：iPad 的 AppleCare+ 已涵蓋搭配使用的<b>一支相容 Apple Pencil</b> 與<b>一個 Apple 品牌 iPad 鍵盤</b>（如巧控鍵盤），<b>不需另外購買</b>。每次意外損壞維修或更換，自負額 $900。</li>
+  <li>建議配件與 iPad 同一張發票購買，或保留購買證明；若送修時系統未顯示配件保固，可憑購買證明致電 <a href="tel:0800095988">0800-095-988</a> 處理。</li>
   <li>Mac：螢幕或外殼 $3,200、其他 $9,600；MacBook Neo：螢幕或外殼 $1,590、其他 $4,990。</li>
   <li>Watch：SE 3／S12 $2,200、Ultra 4 $2,500。AirPods：$900。</li>
   <li>授權維修中心與 Apple 自負額相同。<b>遺失不在承保範圍</b>。</li>
@@ -281,16 +284,16 @@ function damageItems(cat,m,vi){
    {k:"other",l:"其他意外損壞",o:"官網未公布",ac:3200},{k:"bat",l:"電池更換",o:"官網未公布",ac:0}];
   const o=m.o;return[
    {k:"screen",l:"螢幕破裂",o:o.screen,ac:900},{k:"back",l:"機背玻璃破裂",o:o.back,ac:900},
-   {k:"both",l:"螢幕＋機背",o:o.both,ac:"官網未單列，依 Apple 判定"},{k:"cam",l:"後置相機損壞",o:o.cam,ac:3200,acN:"屬「其他意外損壞」"},
+   {k:"both",l:"螢幕＋機背",o:o.both,ac:3200,acN:"官網未單列，以最高自負額計"},{k:"cam",l:"後置相機損壞",o:o.cam,ac:3200,acN:"屬「其他意外損壞」"},
    {k:"other",l:"其他損壞（彎曲、進液等）",o:o.other,ac:3200},{k:"bat",l:"電池更換",o:o.bat,ac:0}];
  }
  if(cat==="ipad"){const other=m.v[vi][1];return[
   {k:"screen",l:"僅螢幕損壞",o:other,oN:"官網未單列螢幕價，以「其他損壞」計",ac:900},
   {k:"other",l:"其他損壞（彎曲、進液等）",o:other,ac:3200},{k:"bat",l:"電池更換",o:m.bat,ac:0},
-  {k:"acc",l:"Apple Pencil／鍵盤",o:Q,ac:900,acN:"配件需自行致電 Apple 客服加保"}];}
- if(cat==="mac"){const s=m.neo?1590:3200,x=m.neo?4990:9600,a=[];
-  if(m.t!=="desktop")a.push({k:"screen",l:"螢幕損壞",o:Q,ac:s});
-  a.push({k:"case",l:"外部機殼損壞",o:Q,ac:s},{k:"other",l:"其他意外損壞（主機板、進液）",o:Q,ac:x});
+  {k:"acc",l:"Apple Pencil／鍵盤",o:Q,ac:900,acN:"已包含在 iPad AppleCare+ 內（Pencil、鍵盤各一），不需另外購買"}];}
+ if(cat==="mac"){const s=m.neo?1590:3200,x=m.neo?4990:9600,a=[],M="$10,000 以上",MN="官網未公布；依 JustCare 價目表「主機板、螢幕、硬碟等 $10,000 以上」";
+  if(m.t!=="desktop")a.push({k:"screen",l:"螢幕損壞",o:M,oN:MN,ac:s});
+  a.push({k:"case",l:"外部機殼損壞",o:M,oN:MN,ac:s},{k:"other",l:"其他意外損壞（主機板、進液）",o:M,oN:MN,ac:x});
   if(m.t==="laptop")a.push({k:"bat",l:"電池更換",o:m.bat,ac:0});return a;}
  if(cat==="watch")return[{k:"acc",l:"意外損壞（螢幕、機身）",o:m.v[vi][1],ac:m.ded},{k:"bat",l:"電池更換",o:3350,ac:0}];
  if(cat==="airpods"){
@@ -319,14 +322,14 @@ function renderResult(){
  acBody+=`<div class="small">專案費用：<b>${m.ac?fmt(m.ac):"價目表未列"}</b>（${AC_YEARS[cat]} 年）${m.acSrc?"<br>※ 價格取自 "+m.acSrc+" 價目表":""}${m.ac?"":"<br>AppleCare+ 價格請洽 0800-095-988"}</div>`;
  let jcBody;
  if(m.nojc)jcBody=`<div class="small">JustCare 價目表無此類商品</div>`;
- else if(!price)jcBody=`<div class="small">請在上方輸入<b>購買金額</b>，以帶出級距與保費</div>`;
+ else if(!price)jcBody=`<div class="small">此商品無官方售價資料</div>`;
  else if(!tier)jcBody=`<div class="small warn">此金額（${fmt(price)}）不在 JustCare 承保級距內</div>`;
  else{
   let main;
   if(it.k==="bat")main=`<div class="big">$0</div><div class="small">限 Apple 品牌，第 13 個月起檢測容量低於 80%（不含 80%）可置換電池；第一年電池問題依 Apple 保固</div>`;
   else if(it.lost)main=`<div class="big">${fmt(it.o)}</div><div class="small">一般遺失不在承保範圍；<b>竊盜損失</b>可依保單申請置換全新品</div>`;
-  else main=`<div class="small">維修自負額</div><div class="big">${tier[5]!=null?fmt(tier[5]):"—"}</div>
-   ${tier[5]==null?`<div class="small warn">價目表未列維修自負額，以保單條款為準</div>`:""}
+  else main=`<div class="small">維修自負額</div><div class="big">${fmt(tier[5]!=null?tier[5]:tier[6])}</div>
+   ${tier[5]==null?`<div class="small">價目表未單列維修自負額，以最高自負額計</div>`:""}
    <div class="small">置換新機自負額：<b>${fmt(tier[6])}</b></div>`;
   jcBody=main+`<div class="small" style="margin-top:6px">級距 ≤ ${tier[0].toLocaleString()} 的保費：<br>${JC_PLANS.map(([l,i])=>`${l} <b>${tier[i]==null?"無":fmt(tier[i])}</b>`).join("<br>")}</div>`;
  }
@@ -353,7 +356,7 @@ function renderBForm(){
  if(t==="ac")f.innerHTML=`<div class="row"><div><label>類別</label><select id="bc">${catOpts()}</select></div><div><label>機型</label><select id="bm"></select></div></div>`;
  if(t==="jc")f.innerHTML=`<div class="row"><div><label>類別</label><select id="bc">${catOpts()}</select></div><div><label>機型</label><select id="bm"></select></div></div>
   <label>規格／容量</label><select id="bs"></select>
-  <div class="row"><div><label>購買金額</label><input id="bprice" type="number" inputmode="numeric"></div><div><label>方案</label><select id="bp">${JC_PLANS.map(([l,i])=>`<option value="${i}">${l}</option>`).join("")}</select></div></div>`;
+  <div class="row"><div><label>官方售價（原價）</label><input id="bprice" type="number" readonly tabindex="-1"></div><div><label>方案</label><select id="bp">${JC_PLANS.map(([l,i])=>`<option value="${i}">${l}</option>`).join("")}</select></div></div>`;
  if(t==="ms")f.innerHTML=`<label>商品</label><select id="bk">${Object.keys(MYSETUP).map(k=>`<option>${k}</option>`).join("")}</select>`;
  if(t==="sv")f.innerHTML=`<label>服務貨號</label><select id="bk">${Object.keys(SERVICE).map(k=>`<option>${k}</option>`).join("")}</select>`;
  if(t==="ti")f.innerHTML=`<label>回收金額（廠商檢查後）</label><input id="bamt" type="number" inputmode="numeric">`;
@@ -365,7 +368,7 @@ function renderBForm(){
   if(t==="ac"){const m=MODELS[$("#bc").value][+$("#bm").value];if(!m)return;
    draft={t,label:"AC "+m.n,prem:m.ac};p.textContent=`保費 ${fmt(m.ac)}`;}
   if(t==="jc"){const c=$("#bc").value,m=MODELS[c][+$("#bm").value],s=(m.sku||[])[+$("#bs").value],price=+$("#bprice").value,tr=jcTier(c,price,m),i=+$("#bp").value;
-   if(!price){p.textContent="請輸入購買金額";return;}
+   if(!price){p.textContent="此商品無官方售價資料";return;}
    if(!tr){p.textContent="此金額不在 JustCare 級距內";return;}
    if(tr[i]==null){p.textContent="此級距無此方案";return;}
    draft={t,label:`JC ${m.n}${s?" "+s[0]:""} ${JC_PLANS[i-1][0]}（${fmt(price)}）`,prem:tr[i]};p.textContent=`保費 ${fmt(tr[i])}　→ 獎金 ${fmt1(tr[i]*0.1)}`;}
@@ -374,7 +377,7 @@ function renderBForm(){
   if(t==="ti"){const a=+$("#bamt").value;if(!a)return;const v=a>=10000?a*0.01:100;draft={t,label:`舊換新 回收 ${fmt(a)}`,fix:v};p.textContent=`獎金 ${fmt1(v)}`;}
  };
  if(t==="ac"||t==="jc"){$("#bc").onchange=fillM;$("#bm").onchange=t==="jc"?fillS:prev;}
- if(t==="jc"){$("#bs").onchange=fillP;$("#bprice").oninput=prev;$("#bp").onchange=prev;}
+ if(t==="jc"){$("#bs").onchange=fillP;$("#bp").onchange=prev;}
  if(t==="ms"||t==="sv")$("#bk").onchange=prev;
  if(t==="ti")$("#bamt").oninput=prev;
  (t==="ac"||t==="jc")?fillM():prev();
@@ -430,7 +433,6 @@ $("#catSeg").onclick=e=>{const c=e.target.dataset.c;if(!c)return;S.cat=c;S.mi=c=
 $("#model").onchange=e=>{S.mi=+e.target.value;S.si=0;renderSku();};
 $("#sku").onchange=e=>{S.si=+e.target.value;renderSku();};
 $("#dmgSeg").onclick=e=>{const k=e.target.dataset.k;if(!k)return;S.dk=k;renderDmg();};
-$("#price").oninput=renderResult;
 $("#btype").onchange=renderBForm;$("#badd").onclick=addRec;$("#month").onchange=renderBList;$("#bcopy").onclick=copyMonth;
 $("#blist").onclick=e=>{const d=load(),mo=$("#month").value;
  if(e.target.dataset.i!=null){d[mo][e.target.dataset.i].on=e.target.checked;saveDB(d);renderBList();}
