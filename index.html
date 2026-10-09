@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="蘋果保固方案">
-<meta name="theme-color" content="#0071e3">
+<meta name="theme-color" content="#031D44">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon.png">
 <title>蘋果保固方案</title>
@@ -103,10 +103,80 @@ th{font-size:12px;font-weight:600;letter-spacing:.03em}
 .foot{margin-top:36px;opacity:.85}
 @media(max-width:640px){br.pc{display:none}}
 @media(max-width:640px){h1{font-size:28px}.card{padding:20px}details{padding:0 18px}}
+
+/* ===== 色卡主題：Prussian・Deep Space・Muted Teal・Tan・Burnt Peach（備份：index.backup-blue-theme.html） ===== */
+:root{
+ --prussian:#031D44;--deep:#04395E;--teal:#70A288;--tan:#DAB785;--peach:#D5896F;
+ --tan-ink:#836E50;--peach-ink:#805243;--teal-ink:#436152;
+ --bg:#F7F3EC;--card:#FFFFFF;--tx:#031D44;--sub:#5B6B7D;--line:rgba(3,29,68,.09);
+ --blue:#04395E;--ac:#04395E;--jc:#DAB785;--no:#D5896F;--ok:#70A288;
+ --shadow:0 1px 2px rgba(3,29,68,.05),0 12px 32px rgba(3,29,68,.07)}
+@media(prefers-color-scheme:dark){:root{
+ --bg:#031D44;--card:#062A52;--tx:#F7F3EC;--sub:#A9B7C6;--line:rgba(218,183,133,.16);
+ --blue:#DAB785;--ac:#7FA8C9;--tan-ink:#DAB785;--peach-ink:#E3A28B;--teal-ink:#9CC3AE;--shadow:0 0 0 1px rgba(218,183,133,.10)}}
+body{letter-spacing:.01em}
+/* 頁首：深藍底 + 金色細線，精品感 */
+header{background:linear-gradient(180deg,#031D44 0%,#04395E 100%);color:#F7F3EC;padding-bottom:30px;position:relative}
+header::after{content:"";position:absolute;left:50%;bottom:0;width:64px;height:2px;background:var(--tan);transform:translateX(-50%)}
+.eyebrow{color:var(--tan);letter-spacing:.32em;font-weight:500}
+h1 .ttl{background:none;-webkit-text-fill-color:#F7F3EC;color:#F7F3EC;font-weight:600;letter-spacing:.04em}
+.slogan{color:rgba(247,243,236,.72);letter-spacing:.12em;font-weight:300}
+/* 分頁 */
+nav{background:var(--bg);backdrop-filter:none;-webkit-backdrop-filter:none}
+nav button{background:transparent;box-shadow:none;border:1px solid var(--line);color:var(--sub);letter-spacing:.06em}
+nav button.on{background:var(--prussian);border-color:var(--prussian);color:#F7F3EC}
+@media(prefers-color-scheme:dark){nav button.on{background:var(--tan);border-color:var(--tan);color:#031D44}}
+/* 標題與數字 */
+h2{letter-spacing:.03em;font-weight:600}
+.num{background:transparent;color:var(--tan-ink);border:1.5px solid var(--tan);font-weight:600}
+label{color:var(--sub);letter-spacing:.08em}
+/* 選擇按鈕 */
+.seg button{border-color:var(--line);color:var(--tx)}
+.seg button.on{background:var(--prussian);border-color:var(--prussian);color:#F7F3EC;box-shadow:0 4px 14px rgba(3,29,68,.22)}
+@media(prefers-color-scheme:dark){.seg button.on{background:var(--tan);border-color:var(--tan);color:#031D44}}
+select:focus,input:focus{border-color:var(--tan);box-shadow:0 0 0 4px rgba(218,183,133,.25)}
+/* 三欄結果 */
+.res.no{background:#FCF6F3}.res.ac{background:#F0F3F5}.res.jc{background:#FAF5EE}
+.res.no h3{color:var(--peach-ink)}.res.ac h3{color:var(--deep)}.res.jc h3{color:var(--tan-ink)}
+@media(prefers-color-scheme:dark){.res.no,.res.ac,.res.jc{background:#062A52}.res.ac h3{color:#7FA8C9}}
+.big{color:var(--tx);font-weight:600}
+.save{background:#E8F0EC;color:var(--teal-ink);border-left:3px solid var(--teal)}
+@media(prefers-color-scheme:dark){.save{background:rgba(112,162,136,.14)}}
+/* 展開區塊 */
+summary{letter-spacing:.03em;font-weight:600}
+details li b{color:var(--peach-ink)}
+/* 優劣比較 */
+.vs th.a{background:var(--deep)}.vs th.j{background:var(--tan);color:var(--prussian)}
+.vs td.win{color:var(--deep)}
+@media(prefers-color-scheme:dark){.vs td.win{color:var(--tan)}}
+/* 按鈕、總額、標籤 */
+.btn{background:var(--prussian);color:#F7F3EC;box-shadow:0 8px 22px rgba(3,29,68,.22);letter-spacing:.08em}
+@media(prefers-color-scheme:dark){.btn{background:var(--tan);color:#031D44}}
+.btn.ghost{background:transparent;color:var(--tx);border:1px solid var(--line);box-shadow:none}
+.total{color:var(--prussian);font-weight:600}
+@media(prefers-color-scheme:dark){.total{color:var(--tan)}}
+.tag{background:rgba(112,162,136,.16);color:var(--teal-ink)}
+.rec input{accent-color:var(--teal)}
+.x{color:var(--peach-ink)}
+.warn{color:var(--peach-ink)}
+a{color:var(--deep)}
+@media(prefers-color-scheme:dark){a{color:var(--tan)}}
+.foot{color:var(--sub);letter-spacing:.06em}
+h1 .logo{width:30px;height:30px;color:var(--tan);flex:none;margin-top:-4px}@media(max-width:640px){h1 .logo{width:24px;height:24px}}
+
+/* 展開區塊：標題、分隔線、內文三段平衡（上下留白一致） */
+details{padding:0 26px}
+summary{padding:20px 0}
+details[open] summary{margin-bottom:0;padding-bottom:18px}
+details>ul,details>div{margin:0!important;padding-top:20px!important;padding-bottom:26px!important}
+details>ul{padding-left:20px!important}
+details>ul>li+li{margin-top:4px}
+details>div>:first-child{margin-top:0!important}
+@media(max-width:640px){details{padding:0 20px}summary{padding:18px 0}details[open] summary{padding-bottom:16px}details>ul,details>div{padding-top:16px!important;padding-bottom:22px!important}}
 </style>
 </head>
 <body>
-<header><div class="eyebrow">APPLECARE+ ・ JUSTCARE</div><h1><span>🍎</span><span class="ttl">蘋果保固方案</span></h1><div class="slogan"><span>機不可失，「保」不可少</span><span>螢幕會破，荷包不破</span></div></header>
+<header><div class="eyebrow">APPLECARE+ ・ JUSTCARE</div><h1><svg class="logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16.4 12.8c0-2.4 2-3.5 2.1-3.6-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8 1.5 0 1.9.8 3.2.8 1.3 0 2.2-1.2 2.9-2.4.9-1.4 1.3-2.7 1.3-2.8 0 0-2.4-1-2.4-4z"/><path d="M14.1 5.4c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg><span class="ttl">蘋果保固方案</span></h1><div class="slogan"><span>機不可失，「保」不可少</span><span>螢幕會破，荷包不破</span></div></header>
 <nav><button class="on" data-t="cmp"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>方案比較</button><button data-t="bonus"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M14.8 9.2c-.5-.8-1.5-1.3-2.8-1.3-1.7 0-2.8.9-2.8 2.1 0 2.9 5.8 1.6 5.8 4.4 0 1.3-1.2 2.2-3 2.2-1.4 0-2.5-.6-3-1.5M12 6.5v1.4M12 16v1.5"/></svg>獎金試算</button><button data-t="loc"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0113 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg>維修據點</button></nav>
 <main>
 
@@ -125,9 +195,9 @@ th{font-size:12px;font-weight:600;letter-spacing:.03em}
  </div>
  <div class="card" id="result"></div>
 
- <details><summary>⚖️ AppleCare+ vs JustCare 優劣比較</summary><div id="vs" style="padding-bottom:14px"></div></details>
- <details><summary>🔍 檢測費 · 保固內外 · 送修注意</summary><ul>
-  <li><b>檢測處理費（燦坤送修）</b>：iPhone／iPad／Watch／AirPods／HomePod <b>$300</b>；Mac <b>$800</b>。適用：保固外、意外損壞報價不修、拒絕維修。</li>
+ <details><summary>AppleCare+ vs JustCare 優劣比較</summary><div id="vs" style="padding-bottom:14px"></div></details>
+ <details><summary>檢測費 · 保固內外 · 送修注意</summary><ul>
+  <li><b>檢測處理費（燦坤送修）</b>：iPhone／iPad／Watch／AirPods／HomePod <b>$300</b>；Mac <b>$800</b>。<br class="pc">適用：保固外、意外損壞報價不修、拒絕維修。</li>
   <li><b>保固內</b>：Apple 一年有限保固，只涵蓋<b>製造瑕疵</b>；意外損壞（摔、壓、進液）不在保固範圍內。</li>
   <li><b>保固外</b>：依 Apple 官網預估費用（含稅），以實際檢查為準；授權維修中心可自行定價。</li>
   <li>Apple 維修服務與替換零件享 <b>90 天保證</b>或保固剩餘期限（取較長者）。</li>
@@ -136,26 +206,26 @@ th{font-size:12px;font-weight:600;letter-spacing:.03em}
   <li>Mac 送修須勾選同意「無法保留資料」，否則退件。</li>
   <li>保固查詢：<a href="https://checkcoverage.apple.com/tw/zh" target="_blank" rel="noopener">checkcoverage.apple.com</a>　AppleCare+ 客服：<a href="tel:0800095988">0800-095-988</a></li>
  </ul></details>
- <details><summary>🔵 AppleCare+ 權益與條款</summary><ul>
+ <details><summary>AppleCare+ 權益與條款</summary><ul>
   <li>保固年限：iPhone／iPad／Watch／AirPods <b>2 年</b>；Mac、顯示器 <b>3 年</b>。</li>
   <li>意外損壞<b>不限次數</b>（依 Apple 官網說明），每次支付自負額。</li>
   <li>電池容量低於 80% 可<b>免費</b>更換。</li>
   <li>iPhone：螢幕或機背玻璃 $900；其他意外損壞 $3,200。</li>
   <li>iPhone Duo：外保護層 $690、正面螢幕 $900、機背玻璃 $900、內螢幕 $3,200、其他 $3,200。</li>
   <li>iPad：僅螢幕 $900、其他 $3,200。</li>
-  <li><b>iPad 配件</b>：iPad 的 AppleCare+ 已涵蓋搭配使用的<b>一支相容 Apple Pencil</b> 與<b>一個 Apple 品牌 iPad 鍵盤</b>（如巧控鍵盤），<b>不需另外購買</b>。每次意外損壞維修或更換，自負額 $900。</li>
-  <li>建議配件與 iPad 同一張發票購買，或保留購買證明；若送修時系統未顯示配件保固，可憑購買證明致電 <a href="tel:0800095988">0800-095-988</a> 處理。</li>
+  <li><b>iPad 配件</b>：iPad 的 AppleCare+ 已涵蓋搭配使用的<b>一支相容 Apple Pencil</b><br class="pc">與<b>一個 Apple 品牌 iPad 鍵盤</b>（如巧控鍵盤），<b>不需另外購買</b>。<br class="pc">每次意外損壞維修或更換，自負額 $900。</li>
+  <li>建議配件與 iPad 同一張發票購買，或保留購買證明；<br class="pc">若送修時系統未顯示配件保固，可憑購買證明致電 <a href="tel:0800095988">0800-095-988</a> 處理。</li>
   <li>Mac：螢幕或外殼 $3,200、其他 $9,600；MacBook Neo：螢幕或外殼 $1,590、其他 $4,990。</li>
   <li>Watch：SE 3／S12 $2,200、Ultra 4 $2,500。AirPods：$900。</li>
   <li>授權維修中心與 Apple 自負額相同。<b>遺失不在承保範圍</b>。</li>
   <li>優先支援（線上對談／電話）。</li>
  </ul></details>
- <details><summary>🟠 JustCare 權益與條款</summary><ul>
+ <details><summary>JustCare 權益與條款</summary><ul>
   <li>承保：美商安達產物保險（Chubb），由安盛保險代理人代理銷售。服務專線 <a href="tel:0800608989">0800-608-989</a>。</li>
   <li>依<b>產品建議售價</b>級距計費（不論實際折扣）：月繳（3 年期）、一次繳 1／2／3 年期。</li>
   <li>保障項目：<b>意外損壞</b>（摔裂、泡水、輾毀、破損）、<b>竊盜損失全球保障</b>（竊盜、搶奪、強盜所致整機滅失）。</li>
   <li><b>手機、平板、手錶、AirPods：原機維修自負額 $0</b>；無法原機維修或維修費高於置換費用時，以置換理賠並收置換自負額。</li>
-  <li><b>Apple 筆記型電腦</b>：維修自負額 $3,000／$4,000／$5,000，置換自負額 $5,000／$9,000／$10,000（依級距）；119,901–150,000 級距無三年期。</li>
+  <li><b>Apple 筆記型電腦</b>：維修自負額 $3,000／$4,000／$5,000，置換自負額 $5,000／$9,000／$10,000（依級距）；<br class="pc">119,901–150,000 級距無三年期。</li>
   <li><b>第二年起硬體保固</b>（二年期／三年期，<b>筆記型電腦除外</b>）：原廠保固以外之材料或製程瑕疵（不含電池故障）。</li>
   <li><b>桌上型電腦（iMac、Mac mini、Mac Studio）與顯示器不在承保範圍</b>。</li>
   <li>每年最多理賠 3 次，三年最高 9 次。</li>
@@ -165,9 +235,9 @@ th{font-size:12px;font-weight:600;letter-spacing:.03em}
   <li>理賠方式由安達產險依毀損狀況認定，<b>以原機維修為原則</b>。</li>
   <li>置換：意外損壞 Apple 換整新機、非 Apple 換全新機；<b>竊盜損失一律換全新機</b>。</li>
   <li>電池置換（限 Apple 品牌，<b>二年期／三年期</b>）：經指定維修中心檢測容量<b>低於 80%（不含 80%）</b>。</li>
-  <li>本商品預定費用率 49.8%。內容僅供參考，悉依保單條款為準（115.10.7 安達商字第 1150000737～1150000739 號函備查）。</li>
+  <li>本商品預定費用率 49.8%。內容僅供參考，悉依保單條款為準<br class="pc">（115.10.7 安達商字第 1150000737～1150000739 號函備查）。</li>
  </ul></details>
- <details><summary>📋 方案費率總表</summary><div id="rateTables" style="padding-bottom:14px"></div></details>
+ <details><summary>方案費率總表</summary><div id="rateTables" style="padding-bottom:14px"></div></details>
 </section>
 
 <!-- ============ 獎金試算 ============ -->
@@ -185,11 +255,11 @@ th{font-size:12px;font-weight:600;letter-spacing:.03em}
   <h2>本月紀錄 <span class="small">（打勾＝計入獎金）</span></h2>
   <div id="blist"></div>
   <div id="bsum" style="margin-top:12px"></div>
-  <button class="btn ghost" id="bcopy">📋 複製本月明細</button>
+  <button class="btn ghost" id="bcopy">複製本月明細</button>
   <button class="btn ghost" id="bclear">清除本月紀錄</button>
   <div class="small" style="margin-top:8px">紀錄只存在你自己的手機／電腦瀏覽器中，不會上傳。</div>
  </div>
- <details><summary>📖 獎金規則（2026 蘋果專員獎金算法）</summary><ul>
+ <details><summary>獎金規則（2026 蘋果專員獎金算法）</summary><ul>
   <li><b>AppleCare+</b>：依個人單月總套數決定比例，套用到當月全部 AC 保費：<br class="pc">1–2 套 2%、3 套 3%、4 套 4%、5 套 5%、6 套以上 6%。</li>
   <li><b>JustCare</b>：保費金額 × 10%（月繳以單期月繳金額計）。</li>
   <li><b>MySetup</b>（完成原廠指定要求）：Mac $123、iPad $40、iPhone $40、Apple Watch $40。</li>
@@ -206,13 +276,13 @@ th{font-size:12px;font-weight:600;letter-spacing:.03em}
   <div id="locRes" style="margin-top:4px"></div>
  </div>
  <div class="card small">
-  ☎️ AppleCare+ 客服：<a href="tel:0800095988">0800-095-988</a><br>
-  🔗 官方據點查詢：<a href="https://locate.apple.com/tw/zh/service" target="_blank" rel="noopener">locate.apple.com</a><br>
-  ⚠️ 據點資料整理自 mrmad 文章截圖，營業時間與電話請以各店公告為準。
+  AppleCare+ 客服：<a href="tel:0800095988">0800-095-988</a><br>
+  官方據點查詢：<a href="https://locate.apple.com/tw/zh/service" target="_blank" rel="noopener">locate.apple.com</a><br>
+  據點資料整理自 mrmad 文章截圖，營業時間與電話請以各店公告為準。
  </div>
 </section>
 
-<div class="foot">版本 <span id="build">20261009-152147</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
+<div class="foot">版本 <span id="build">20261009-173601</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
 </main>
 
 <script>
@@ -358,7 +428,7 @@ function damageItems(cat,m,vi){
   {k:"screen",l:"僅螢幕損壞",o:other,oN:"官網未單列螢幕價，以「其他損壞」計",ac:900},
   {k:"other",l:"其他損壞（彎曲、進液等）",o:other,ac:3200},{k:"bat",l:"電池更換",o:m.bat,ac:0},
   {k:"acc",l:"Apple Pencil／鍵盤",o:Q,ac:900,acN:"已包含在 iPad AppleCare+ 內（Pencil、鍵盤各一），不需另外購買"}];}
- if(cat==="mac"){const s=m.neo?1590:3200,x=m.neo?4990:9600,a=[],M="$10,000 以上",MN="官網未公布；依 JustCare 價目表「主機板、螢幕、硬碟等 $10,000 以上」";
+ if(cat==="mac"){const s=m.neo?1590:3200,x=m.neo?4990:9600,a=[],M="$10,000 以上",MN="官網未公布；<br class=\"pc\">依 JustCare 價目表<br class=\"pc\">「主機板、螢幕、硬碟等<br class=\"pc\">$10,000 以上」";
   if(m.t!=="desktop")a.push({k:"screen",l:"螢幕損壞",o:M,oN:MN,ac:s});
   a.push({k:"case",l:"外部機殼損壞",o:M,oN:MN,ac:s},{k:"other",l:"其他意外損壞（主機板、進液）",o:M,oN:MN,ac:x});
   if(m.t==="laptop")a.push({k:"bat",l:"電池更換",o:m.bat,ac:0});return a;}
@@ -383,23 +453,23 @@ function renderDmg(){const it=damageItems(S.cat,curM(),(curSku()||[])[2]||0);if(
 function renderResult(){
  const cat=S.cat,m=curM(),sk=curSku(),it=damageItems(cat,m,(sk||[])[2]||0).find(x=>x.k===S.dk);
  const price=+$("#price").value||0,tier=jcTier(cat,price,m),fee=cat==="mac"?800:300;
- const noTxt=`<div class="big">${fmt(it.o)}</div><div class="small">${it.oN?it.oN+"<br>":""}Apple 官網保固外預估價（含稅），<span style="white-space:nowrap">以檢查為準</span><br>報價不修／拒修收檢測費 $${fee}</div>`;
+ const noTxt=`<div class="big">${fmt(it.o)}</div><div class="small">${it.oN?it.oN+"<br>":""}Apple 官網保固外預估價（含稅），<br class="pc"><span style="white-space:nowrap">以檢查為準</span><br>報價不修／拒修收檢測費 $${fee}</div>`;
  let acBody=it.lost?`<div class="big">${fmt(it.o)}</div><div class="small">AppleCare+ 不承保遺失，需自費</div>`
   :`<div class="big">${fmt(it.ac)}</div><div class="small">${it.k==="bat"?"電池容量低於 80% 免費更換<br>":""}${it.acN?it.acN+"<br>":""}</div>`;
  acBody+=`<div class="small">專案費用：<b>${m.ac?fmt(m.ac):"價目表未列"}</b>（${AC_YEARS[cat]} 年）${m.acSrc?"<br>※ 價格取自 "+m.acSrc+" 價目表":""}${m.ac?"":"<br>AppleCare+ 價格請洽 0800-095-988"}</div>`;
  let jcBody;
- if(m.nojc)jcBody=`<div class="small">JustCare 不承保此類商品（僅承保手機、平板、手錶、AirPods、筆記型電腦）</div>`;
+ if(m.nojc)jcBody=`<div class="small">JustCare 不承保此類商品<br class="pc">（僅承保手機、平板、手錶、<br class="pc">AirPods、筆記型電腦）</div>`;
  else if(!price)jcBody=`<div class="small">此商品無官方售價資料</div>`;
  else if(!tier)jcBody=`<div class="small warn">此金額（${fmt(price)}）不在 JustCare 承保級距內</div>`;
  else{
   let main;
-  if(it.k==="bat")main=`<div class="big">$0</div><div class="small">限 Apple 品牌，<b>僅二年期／三年期</b>適用；經指定維修中心檢測容量低於 80%（不含 80%）可原機置換電池。一年期不含此項</div>`;
-  else if(it.lost)main=`<div class="big">${fmt(it.o)}</div><div class="small">一般遺失不在承保範圍；<b>竊盜損失</b>可依保單申請置換全新品</div>`;
+  if(it.k==="bat")main=`<div class="big">$0</div><div class="small">限 Apple 品牌，<br class="pc"><b>僅二年期／三年期</b>適用；<br class="pc">經指定維修中心檢測容量<br class="pc">低於 80%（不含 80%）<br class="pc">可原機置換電池。<br class="pc">一年期不含此項</div>`;
+  else if(it.lost)main=`<div class="big">${fmt(it.o)}</div><div class="small">一般遺失不在承保範圍；<br class="pc"><b>竊盜損失</b>可依保單申請置換全新品</div>`;
   else main=`<div class="small">原機維修自負額</div><div class="big">${fmt(tier[5])}</div>
-   <div class="small">${tier[5]===0?"可原機維修<b>不收費</b><br>":""}無法維修或維修費高於置換費時改為置換，置換自負額：<b>${fmt(tier[6])}</b>${cat==="mac"?"":"（Apple 換整新機）"}</div>`;
+   <div class="small">${tier[5]===0?"可原機維修<b>不收費</b><br>":""}無法維修或維修費高於置換費時<br class="pc">改為置換，置換自負額：<b>${fmt(tier[6])}</b>${cat==="mac"?"":'<br class="pc">（Apple 換整新機）'}</div>`;
   jcBody=main+`<div class="small" style="margin-top:6px">級距 ≤ ${tier[0].toLocaleString()} 的保費：<br>${JC_PLANS.map(([l,i])=>`${l} <b>${tier[i]==null?"無":fmt(tier[i])}</b>`).join("<br>")}</div>`;
  }
- const save=(typeof it.o==="number"&&typeof it.ac==="number"&&!it.lost)?`<div class="save">💡 有 AppleCare+，這次修理可省 <b>${fmt(it.o-it.ac)}</b></div>`:"";
+ const save=(typeof it.o==="number"&&typeof it.ac==="number"&&!it.lost)?`<div class="save">有 AppleCare+，這次修理可省 <b>${fmt(it.o-it.ac)}</b></div>`:"";
  $("#result").innerHTML=`<h2><span class="num">3</span>${m.n}${sk&&m.sku.length>1?"（"+sk[0]+"）":""}：${it.l}</h2>
   <div class="grid3"><div class="res no"><h3><i class="dot"></i>沒保險</h3>${noTxt}</div><div class="res ac"><h3><i class="dot"></i>AppleCare+</h3>${acBody}</div><div class="res jc"><h3><i class="dot"></i>JustCare</h3>${jcBody}</div></div>${save}`;
  renderVS(cat,m,sk,price,tier);
@@ -427,12 +497,12 @@ function renderVS(cat,m,sk,price,tier){
  const name=m.n+(sk&&m.sku.length>1?"（"+sk[0]+"）":"");
  const acY=AC_YEARS[cat];
  const r=[];
- if(m.ac)r.push(["🔵 AppleCare+",m.ac,acY]);
- if(tier){[["🟠 JC 月繳（3 年）",tier[1]*36,3,`${fmt(tier[1])} × 36 期`],["🟠 JC 一次繳 1 年",tier[2],1],["🟠 JC 一次繳 2 年",tier[3],2],["🟠 JC 一次繳 3 年",tier[4],3]].forEach(x=>{if(x[1]!=null&&!isNaN(x[1]))r.push(x);});}
+ if(m.ac)r.push(["AppleCare+",m.ac,acY]);
+ if(tier){[["JC 月繳（3 年）",tier[1]*36,3,`${fmt(tier[1])} × 36 期`],["JC 一次繳 1 年",tier[2],1],["JC 一次繳 2 年",tier[3],2],["JC 一次繳 3 年",tier[4],3]].forEach(x=>{if(x[1]!=null&&!isNaN(x[1]))r.push(x);});}
  if(r.length)ex=`<p style="margin:14px 0 6px"><b style="color:var(--tx)">以 ${name} 試算保費</b></p><div class="scroll"><table>
   <tr><th>方案</th><th>總保費</th><th>保障</th><th>平均每年</th></tr>
   ${r.map(([l,t,y,n])=>`<tr><td>${l}${n?`<div class="small">${n}</div>`:""}</td><td><b>${fmt(t)}</b></td><td>${y} 年</td><td>${fmt(Math.round(t/y))}</td></tr>`).join("")}</table></div>`;
- $("#vs").innerHTML=`<div class="scroll"><table class="vs"><tr><th style="background:none"></th><th class="a">🔵 AppleCare+</th><th class="j">🟠 JustCare</th></tr>${rows}</table></div>
+ $("#vs").innerHTML=`<div class="scroll"><table class="vs"><tr><th style="background:none"></th><th class="a">AppleCare+</th><th class="j">JustCare</th></tr>${rows}</table></div>
  <div class="small" style="margin-top:6px"><b style="color:var(--blue)">藍字</b>＝較有優勢　＊ 依各保單條款為準</div>`;
 }
 /* ---- 獎金 ---- */
@@ -527,8 +597,8 @@ function renderCity(){
 function renderLoc(){
  const c=$("#city").value,list=CENTERS.filter(x=>!c||x.c===c);
  $("#locRes").innerHTML=list.map(x=>`<div class="loc"><span class="tag">${x.b}</span><b>${x.n}</b>
-  <div class="small">📍 <a href="https://maps.apple.com/?q=${encodeURIComponent(x.a)}" target="_blank" rel="noopener">${x.a}</a><br>
-  ☎️ <a href="tel:${x.t.replace(/\D/g,"")}">${x.t}</a>${x.h?"<br>🕒 "+x.h:""}</div></div>`).join("")||`<div class="small">此縣市暫無資料</div>`;
+  <div class="small"><a href="https://maps.apple.com/?q=${encodeURIComponent(x.a)}" target="_blank" rel="noopener">${x.a}</a><br>
+  <a href="tel:${x.t.replace(/\D/g,"")}">${x.t}</a>${x.h?"<br>"+x.h:""}</div></div>`).join("")||`<div class="small">此縣市暫無資料</div>`;
 }
 
 /* ---- 事件 ---- */
