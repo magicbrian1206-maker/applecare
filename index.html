@@ -282,7 +282,7 @@ details>div>:first-child{margin-top:0!important}
  </div>
 </section>
 
-<div class="foot">版本 <span id="build">20261009-194035</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
+<div class="foot">版本 <span id="build">20261009-203914</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
 </main>
 
 <script>
@@ -466,7 +466,7 @@ function renderResult(){
   if(it.k==="bat")main=`<div class="big">$0</div><div class="small">限 Apple 品牌，<br class="pc"><b>僅二年期／三年期</b>適用；<br class="pc">經指定維修中心檢測容量<br class="pc">低於 80%（不含 80%）<br class="pc">可原機置換電池。<br class="pc">一年期不含此項</div>`;
   else if(it.lost)main=`<div class="big">${fmt(it.o)}</div><div class="small">一般遺失不在承保範圍；<br class="pc"><b>竊盜損失</b>可依保單申請置換全新品</div>`;
   else main=`<div class="small">原機維修自負額</div><div class="big">${fmt(tier[5])}</div>
-   <div class="small">${tier[5]===0?"可原機維修<b>不收費</b><br>":""}無法維修或維修費高於置換費時<br class="pc">改為置換，置換自負額：<b>${fmt(tier[6])}</b>${cat==="mac"?"":'<br class="pc">（Apple 換整新機）'}</div>`;
+   <div class="small">${tier[5]===0?"可原機維修<b>不收費</b><br>":""}無法維修或維修費高於置換費時改為置換，置換自負額：<b>${fmt(tier[6])}</b>${cat==="mac"?"":"（Apple 換整新機）"}</div>`;
   jcBody=main+`<div class="small" style="margin-top:6px">級距 ≤ ${tier[0].toLocaleString()} 的保費：<br>${JC_PLANS.map(([l,i])=>`${l} <b>${tier[i]==null?"無":fmt(tier[i])}</b>`).join("<br>")}</div>`;
  }
  const save=(typeof it.o==="number"&&typeof it.ac==="number"&&!it.lost)?`<div class="save">有 AppleCare+，這次修理可省 <b>${fmt(it.o-it.ac)}</b></div>`:"";
