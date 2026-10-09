@@ -49,24 +49,76 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{border-bottom:1px
 .tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;background:var(--bg);border:1px solid var(--line);margin-right:6px}
 .loc{padding:12px 0;border-bottom:1px solid var(--line)}.loc b{font-size:15px}
 .warn{color:var(--no)}.foot{text-align:center;color:var(--sub);font-size:12px;margin-top:20px;line-height:1.7}
+
+/* ===== 精緻版外觀（只改視覺，不影響資料與計算） ===== */
+:root{--sub:#86868b;--line:rgba(0,0,0,.08);--shadow:0 1px 2px rgba(0,0,0,.04),0 10px 30px rgba(0,0,0,.05)}
+@media(prefers-color-scheme:dark){:root{--line:rgba(255,255,255,.1);--shadow:0 0 0 1px rgba(255,255,255,.06)}}
+body{-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+header{padding:calc(env(safe-area-inset-top) + 40px) 20px 22px;background:radial-gradient(120% 90% at 50% 0%,color-mix(in srgb,var(--blue) 10%,transparent),transparent 70%)}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.14em;color:var(--blue);margin-bottom:8px}
+h1{font-size:34px;font-weight:700;letter-spacing:-.02em;line-height:1.15;display:flex;justify-content:center;align-items:center;gap:10px}
+h1 .ttl{background:linear-gradient(100deg,var(--tx) 30%,var(--blue));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.slogan{font-size:15px;margin-top:10px;letter-spacing:.04em}
+nav{padding:10px max(12px,calc((100% - 860px)/2));gap:8px;border-bottom:1px solid var(--line)}
+nav button{border-radius:999px;padding:11px 6px;font-weight:500;color:var(--sub);background:var(--card);box-shadow:var(--shadow)}
+nav button.on{background:var(--tx);color:var(--bg);font-weight:600}
+.card{border-radius:22px;padding:24px;margin:18px 0;box-shadow:var(--shadow)}
+h2{font-size:19px;font-weight:700;letter-spacing:-.01em;margin:0 0 16px;display:flex;align-items:center;gap:10px;line-height:1.35}
+.num{flex:none;width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;font-size:13px;font-weight:700;display:inline-grid;place-items:center}
+label{font-size:12px;font-weight:600;letter-spacing:.03em;margin:16px 0 7px}
+select,input{padding:13px 14px;border-radius:12px;border:1px solid var(--line);transition:border-color .2s,box-shadow .2s}
+select{padding-right:38px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%2386868b' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+select:focus,input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px color-mix(in srgb,var(--blue) 15%,transparent)}
+input[readonly]{opacity:1;color:var(--sub);font-weight:600}
+input[type=number]{-moz-appearance:textfield}input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.seg{gap:8px}.seg button{padding:9px 16px;font-weight:500;background:var(--card);border-color:var(--line);transition:all .2s}
+.seg button.on{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 4px 14px color-mix(in srgb,var(--blue) 30%,transparent)}
+.grid3{gap:14px}
+.res{border:0;border-radius:18px;padding:20px 18px 18px;position:relative;overflow:hidden;background:var(--bg)}
+.res::before{content:"";position:absolute;left:0;right:0;top:0;height:4px}
+.res.no::before{background:var(--no)}.res.ac::before{background:var(--ac)}.res.jc::before{background:var(--jc)}
+.res.no{background:color-mix(in srgb,var(--no) 5%,var(--card))}.res.ac{background:color-mix(in srgb,var(--ac) 6%,var(--card))}.res.jc{background:color-mix(in srgb,var(--jc) 7%,var(--card))}
+.res h3{font-size:13px;font-weight:700;letter-spacing:.06em;display:flex;align-items:center;gap:8px;margin:0 0 4px}
+.res.no h3{color:var(--no)}.res.ac h3{color:var(--ac)}.res.jc h3{color:color-mix(in srgb,var(--jc) 80%,#000)}
+.dot{width:8px;height:8px;border-radius:50%;background:currentColor;display:inline-block}
+.big{font-size:34px;letter-spacing:-.02em;line-height:1.15;margin:6px 0 10px}
+.save{margin-top:14px;padding:14px 18px;border-radius:14px;font-size:15px;background:linear-gradient(135deg,color-mix(in srgb,var(--ok) 18%,transparent),color-mix(in srgb,var(--ok) 6%,transparent))}
+details{border-radius:18px;padding:0 22px;margin:12px 0;box-shadow:var(--shadow)}
+summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0;font-size:15px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"";flex:none;width:8px;height:8px;border-right:2px solid var(--sub);border-bottom:2px solid var(--sub);transform:rotate(45deg);transition:transform .25s;margin-right:4px}
+details[open] summary{border-bottom:1px solid var(--line);margin-bottom:14px}
+details[open] summary::after{transform:rotate(-135deg)}
+details ul{line-height:1.8}
+.vs th.a{border-radius:12px 0 0 0}.vs th.j{border-radius:0 12px 0 0}.vs th,.vs td{padding:11px 10px}
+th{font-size:12px;font-weight:600;letter-spacing:.03em}
+.btn{border-radius:14px;padding:14px;font-weight:600;box-shadow:0 6px 18px color-mix(in srgb,var(--blue) 28%,transparent);transition:transform .15s}
+.btn:active{transform:scale(.98)}
+.btn.ghost{background:var(--card);box-shadow:none;font-weight:500}
+.rec input{accent-color:var(--blue)}
+.total{font-size:42px;letter-spacing:-.02em;color:var(--blue)}
+.tag{border:0;font-weight:600;color:var(--blue);background:color-mix(in srgb,var(--blue) 10%,transparent)}
+.loc{padding:16px 0}a{text-decoration:none}a:hover{text-decoration:underline}
+.foot{margin-top:36px;opacity:.85}
+@media(max-width:640px){h1{font-size:28px}.card{padding:20px}details{padding:0 18px}}
 </style>
 </head>
 <body>
-<header><h1>🍎 蘋果保固方案</h1><div class="slogan"><span>機不可失，「保」不可少</span><span>螢幕會破，荷包不破</span></div></header>
+<header><div class="eyebrow">APPLECARE+ ・ JUSTCARE</div><h1><span>🍎</span><span class="ttl">蘋果保固方案</span></h1><div class="slogan"><span>機不可失，「保」不可少</span><span>螢幕會破，荷包不破</span></div></header>
 <nav><button class="on" data-t="cmp">🛡️ 方案比較</button><button data-t="bonus">💰 獎金試算</button><button data-t="loc">📍 維修據點</button></nav>
 <main>
 
 <!-- ============ 方案比較 ============ -->
 <section id="cmp" class="tab on">
  <div class="card">
-  <h2>① 選擇商品</h2>
+  <h2><span class="num">1</span>選擇商品</h2>
   <div class="seg" id="catSeg"></div>
   <label>機型</label><select id="model"></select>
   <div id="skuWrap"><label>規格／容量</label><select id="sku"></select>
   <label>官方售價（保險一律以原價計算，不含任何折扣）</label><input id="price" type="number" readonly tabindex="-1"></div>
  </div>
  <div class="card">
-  <h2>② 選擇損壞項目</h2>
+  <h2><span class="num">2</span>選擇損壞項目</h2>
   <div class="seg" id="dmgSeg"></div>
  </div>
  <div class="card" id="result"></div>
@@ -158,7 +210,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{border-bottom:1px
  </div>
 </section>
 
-<div class="foot">版本 <span id="build">20261007-204242</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
+<div class="foot">版本 <span id="build">20261009-143449</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
 </main>
 
 <script>
@@ -346,8 +398,8 @@ function renderResult(){
   jcBody=main+`<div class="small" style="margin-top:6px">級距 ≤ ${tier[0].toLocaleString()} 的保費：<br>${JC_PLANS.map(([l,i])=>`${l} <b>${tier[i]==null?"無":fmt(tier[i])}</b>`).join("<br>")}</div>`;
  }
  const save=(typeof it.o==="number"&&typeof it.ac==="number"&&!it.lost)?`<div class="save">💡 有 AppleCare+，這次修理可省 <b>${fmt(it.o-it.ac)}</b></div>`:"";
- $("#result").innerHTML=`<h2>③ ${m.n}${sk&&m.sku.length>1?"（"+sk[0]+"）":""}：${it.l}</h2>
-  <div class="grid3"><div class="res no"><h3>❌ 沒保險</h3>${noTxt}</div><div class="res ac"><h3>🔵 AppleCare+</h3>${acBody}</div><div class="res jc"><h3>🟠 JustCare</h3>${jcBody}</div></div>${save}`;
+ $("#result").innerHTML=`<h2><span class="num">3</span>${m.n}${sk&&m.sku.length>1?"（"+sk[0]+"）":""}：${it.l}</h2>
+  <div class="grid3"><div class="res no"><h3><i class="dot"></i>沒保險</h3>${noTxt}</div><div class="res ac"><h3><i class="dot"></i>AppleCare+</h3>${acBody}</div><div class="res jc"><h3><i class="dot"></i>JustCare</h3>${jcBody}</div></div>${save}`;
  renderVS(cat,m,sk,price,tier);
 }
 
