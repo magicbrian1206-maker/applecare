@@ -281,7 +281,7 @@ details>div>:first-child{margin-top:0!important}
  </div>
 </section>
 
-<div class="foot">版本 <span id="build">20261015-164113</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
+<div class="foot">版本 <span id="build">20261015-164752</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
 </main>
 
 <script>
@@ -613,7 +613,7 @@ function renderLoc(){
 
 /* ---- 事件 ---- */
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button,.tab").forEach(e=>e.classList.remove("on"));b.classList.add("on");$("#"+b.dataset.t).classList.add("on");scrollTo(0,0);});
-$("#catSeg").onclick=e=>{const c=e.target.dataset.c;if(!c)return;S.cat=c;S.mi=c==="iphone"?2:0;S.si=0;S.dk=null;renderCats();renderModels();};
+$("#catSeg").onclick=e=>{const c=e.target.dataset.c;if(!c)return;S.cat=c;S.mi=c==="iphone"||c==="ipad"?2:0;S.si=0;S.dk=null;renderCats();renderModels();};
 $("#model").onchange=e=>{S.mi=+e.target.value;S.si=0;renderSku();};
 $("#sku").onchange=e=>{S.si=+e.target.value;renderSku();};
 $("#dmgSeg").onclick=e=>{const k=e.target.dataset.k;if(!k)return;S.dk=k;renderDmg();};
