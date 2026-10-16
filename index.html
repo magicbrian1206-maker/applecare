@@ -7,12 +7,13 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="蘋果保固方案">
 <meta name="theme-color" content="#031D44">
+<meta name="color-scheme" content="light only">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon.png">
 <title>蘋果保固方案</title>
 <style>
-:root{--bg:#f5f5f7;--card:#fff;--tx:#1d1d1f;--sub:#6e6e73;--line:#e5e5ea;--blue:#0071e3;--ac:#0a84ff;--jc:#ff9f0a;--no:#ff3b30;--ok:#34c759;--r:16px}
-@media(prefers-color-scheme:dark){:root{--bg:#000;--card:#1c1c1e;--tx:#f5f5f7;--sub:#98989d;--line:#38383a}}
+:root{color-scheme:light only;--bg:#f5f5f7;--card:#fff;--tx:#1d1d1f;--sub:#6e6e73;--line:#e5e5ea;--blue:#0071e3;--ac:#0a84ff;--jc:#ff9f0a;--no:#ff3b30;--ok:#34c759;--r:16px}
+@media not all{:root{--bg:#000;--card:#1c1c1e;--tx:#f5f5f7;--sub:#98989d;--line:#38383a}}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,"PingFang TC","Noto Sans TC",sans-serif;background:var(--bg);color:var(--tx);-webkit-text-size-adjust:100%}
 a{color:var(--blue)}
 header{padding:calc(env(safe-area-inset-top) + 18px) 18px 6px;text-align:center}
@@ -52,7 +53,7 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{border-bottom:1px
 
 /* ===== 精緻版外觀（只改視覺，不影響資料與計算） ===== */
 :root{--sub:#86868b;--line:rgba(0,0,0,.08);--shadow:0 1px 2px rgba(0,0,0,.04),0 10px 30px rgba(0,0,0,.05)}
-@media(prefers-color-scheme:dark){:root{--line:rgba(255,255,255,.1);--shadow:0 0 0 1px rgba(255,255,255,.06)}}
+@media not all{:root{--line:rgba(255,255,255,.1);--shadow:0 0 0 1px rgba(255,255,255,.06)}}
 body{-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
 header{padding:calc(env(safe-area-inset-top) + 40px) 20px 22px;background:radial-gradient(120% 90% at 50% 0%,color-mix(in srgb,var(--blue) 10%,transparent),transparent 70%)}
 .eyebrow{font-size:12px;font-weight:600;letter-spacing:.14em;color:var(--blue);margin-bottom:8px}
@@ -111,7 +112,7 @@ th{font-size:12px;font-weight:600;letter-spacing:.03em}
  --bg:#F7F3EC;--card:#FFFFFF;--tx:#031D44;--sub:#5B6B7D;--line:rgba(3,29,68,.09);
  --blue:#04395E;--ac:#04395E;--jc:#DAB785;--no:#D5896F;--ok:#70A288;
  --shadow:0 1px 2px rgba(3,29,68,.05),0 12px 32px rgba(3,29,68,.07)}
-@media(prefers-color-scheme:dark){:root{
+@media not all{:root{
  --bg:#031D44;--card:#062A52;--tx:#F7F3EC;--sub:#A9B7C6;--line:rgba(218,183,133,.16);
  --blue:#DAB785;--ac:#7FA8C9;--tan-ink:#DAB785;--peach-ink:#E3A28B;--teal-ink:#9CC3AE;--shadow:0 0 0 1px rgba(218,183,133,.10)}}
 body{letter-spacing:.01em}
@@ -125,7 +126,7 @@ h1 .ttl{background:none;-webkit-text-fill-color:#F7F3EC;color:#F7F3EC;font-weigh
 nav{background:var(--bg);backdrop-filter:none;-webkit-backdrop-filter:none}
 nav button{background:transparent;box-shadow:none;border:1px solid var(--line);color:var(--sub);letter-spacing:.06em}
 nav button.on{background:var(--prussian);border-color:var(--prussian);color:#F7F3EC}
-@media(prefers-color-scheme:dark){nav button.on{background:var(--tan);border-color:var(--tan);color:#031D44}}
+@media not all{nav button.on{background:var(--tan);border-color:var(--tan);color:#031D44}}
 /* 標題與數字 */
 h2{letter-spacing:.03em;font-weight:600}
 .num{background:transparent;color:var(--tan-ink);border:1.5px solid var(--tan);font-weight:600}
@@ -133,34 +134,34 @@ label{color:var(--sub);letter-spacing:.08em}
 /* 選擇按鈕 */
 .seg button{border-color:var(--line);color:var(--tx)}
 .seg button.on{background:var(--prussian);border-color:var(--prussian);color:#F7F3EC;box-shadow:0 4px 14px rgba(3,29,68,.22)}
-@media(prefers-color-scheme:dark){.seg button.on{background:var(--tan);border-color:var(--tan);color:#031D44}}
+@media not all{.seg button.on{background:var(--tan);border-color:var(--tan);color:#031D44}}
 select:focus,input:focus{border-color:var(--tan);box-shadow:0 0 0 4px rgba(218,183,133,.25)}
 /* 三欄結果 */
 .res.no{background:#FCF6F3}.res.ac{background:#F0F3F5}.res.jc{background:#FAF5EE}
 .res.no h3{color:var(--peach-ink)}.res.ac h3{color:var(--deep)}.res.jc h3{color:var(--tan-ink)}
-@media(prefers-color-scheme:dark){.res.no,.res.ac,.res.jc{background:#062A52}.res.ac h3{color:#7FA8C9}}
+@media not all{.res.no,.res.ac,.res.jc{background:#062A52}.res.ac h3{color:#7FA8C9}}
 .big{color:var(--tx);font-weight:600}
 .save{background:#E8F0EC;color:var(--teal-ink);border-left:3px solid var(--teal)}
-@media(prefers-color-scheme:dark){.save{background:rgba(112,162,136,.14)}}
+@media not all{.save{background:rgba(112,162,136,.14)}}
 /* 展開區塊 */
 summary{letter-spacing:.03em;font-weight:600}
 details li b{color:var(--peach-ink)}
 /* 優劣比較 */
 .vs th.a{background:var(--deep)}.vs th.j{background:var(--tan);color:var(--prussian)}
 .vs td.win{color:var(--deep)}
-@media(prefers-color-scheme:dark){.vs td.win{color:var(--tan)}}
+@media not all{.vs td.win{color:var(--tan)}}
 /* 按鈕、總額、標籤 */
 .btn{background:var(--prussian);color:#F7F3EC;box-shadow:0 8px 22px rgba(3,29,68,.22);letter-spacing:.08em}
-@media(prefers-color-scheme:dark){.btn{background:var(--tan);color:#031D44}}
+@media not all{.btn{background:var(--tan);color:#031D44}}
 .btn.ghost{background:transparent;color:var(--tx);border:1px solid var(--line);box-shadow:none}
 .total{color:var(--prussian);font-weight:600}
-@media(prefers-color-scheme:dark){.total{color:var(--tan)}}
+@media not all{.total{color:var(--tan)}}
 .tag{background:rgba(112,162,136,.16);color:var(--teal-ink)}
 .rec input{accent-color:var(--teal)}
 .x{color:var(--peach-ink)}
 .warn{color:var(--peach-ink)}
 a{color:var(--deep)}
-@media(prefers-color-scheme:dark){a{color:var(--tan)}}
+@media not all{a{color:var(--tan)}}
 .foot{color:var(--sub);letter-spacing:.06em}
 h1 .logo{width:30px;height:30px;color:var(--tan);flex:none;margin-top:-4px}@media(max-width:640px){h1 .logo{width:24px;height:24px}}
 
@@ -198,10 +199,10 @@ details>div>:first-child{margin-top:0!important}
 .quick b{color:var(--tx);font-size:15px}
 .quick .qa{background:#F0F3F5;border-left:3px solid var(--deep)}.quick .qj{background:#FAF5EE;border-left:3px solid var(--tan)}
 .quick .qt{font-weight:700;letter-spacing:.04em;font-size:12px}.quick .qa .qt{color:var(--deep)}.quick .qj .qt{color:var(--tan-ink)}
-@media(prefers-color-scheme:dark){.quick .qa,.quick .qj{background:#062A52}.quick .qa .qt{color:#7FA8C9}}
+@media not all{.quick .qa,.quick .qj{background:#062A52}.quick .qa .qt{color:#7FA8C9}}
 @media(max-width:640px){.quick{grid-template-columns:1fr;gap:8px}}
 /* ===== 深色模式對比加強（只影響晚上／深色模式） ===== */
-@media(prefers-color-scheme:dark){
+@media not all{
  :root{--card:#0E3A6B;--sub:#C4D0DC;--line:rgba(218,183,133,.24)}
  select,input{background-color:#052448}
  .res.no,.res.ac,.res.jc,.quick .qa,.quick .qj{background:#082F5C;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
@@ -322,7 +323,7 @@ details>div>:first-child{margin-top:0!important}
  </div>
 </section>
 
-<div class="foot">版本 <span id="build">20261016-185704</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
+<div class="foot">版本 <span id="build">20261016-190146</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
 </main>
 
 <script>
