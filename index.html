@@ -173,6 +173,26 @@ details>ul{padding-left:20px!important}
 details>ul>li+li{margin-top:4px}
 details>div>:first-child{margin-top:0!important}
 @media(max-width:640px){details{padding:0 20px}summary{padding:18px 0}details[open] summary{padding-bottom:16px}details>ul,details>div{padding-top:16px!important;padding-bottom:22px!important}}
+
+/* ===== 手機版優化（只影響 640px 以下螢幕） ===== */
+.rec>div:first-child{flex:1;min-width:0}
+@media(max-width:640px){
+ header{padding:calc(env(safe-area-inset-top) + 22px) 16px 18px}
+ .eyebrow{font-size:10px;margin-bottom:6px}
+ h1{font-size:24px}.slogan{font-size:12px;margin-top:6px;padding-bottom:14px;letter-spacing:.06em}
+ nav{padding:8px 10px;gap:6px}nav button{padding:9px 4px;font-size:14px;gap:5px}.ic{width:16px;height:16px}
+ main{padding:4px 10px calc(env(safe-area-inset-bottom) + 40px)}
+ .card{padding:16px;margin:12px 0;border-radius:18px}
+ h2{font-size:17px;margin-bottom:12px}
+ label{margin:12px 0 6px}
+ .seg{gap:6px}.seg button{padding:8px 13px;font-size:14px}
+ .grid3{gap:10px}.res{padding:16px 14px 14px}.big{font-size:28px;margin:4px 0 8px}
+ .save{font-size:14px;padding:12px 14px}
+ .rec{align-items:flex-start;gap:8px;padding:12px 0}.rec .amt{padding-top:2px}
+ .x{padding:0 2px 0 8px}
+ .total{font-size:34px}
+ .btn{padding:13px;margin-top:10px}
+}
 </style>
 </head>
 <body>
@@ -282,7 +302,7 @@ details>div>:first-child{margin-top:0!important}
  </div>
 </section>
 
-<div class="foot">版本 <span id="build">20261016-154312</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
+<div class="foot">版本 <span id="build">20261016-155513</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
 </main>
 
 <script>
@@ -451,7 +471,7 @@ function damageItems(cat,m,vi){
 
 const S={cat:"iphone",mi:2,si:0,dk:null};
 const curM=()=>MODELS[S.cat][S.mi], curSku=()=>(curM().sku||[])[S.si];
-const skuOpts=m=>(m.sku||[]).map((s,i)=>`<option value="${i}">${s[0]}　${fmt(s[1])}</option>`).join("");
+const skuOpts=m=>(m.sku||[]).map((s,i)=>`<option value="${i}">${s[0]} ${fmt(s[1])}</option>`).join("");
 
 function renderCats(){$("#catSeg").innerHTML=Object.entries(CATS).map(([k,v])=>`<button class="${k===S.cat?"on":""}" data-c="${k}">${v}</button>`).join("");}
 function renderModels(){$("#model").innerHTML=MODELS[S.cat].map((m,i)=>`<option value="${i}">${m.n}</option>`).join("");$("#model").value=S.mi;renderSku();}
@@ -538,7 +558,7 @@ function renderBForm(){
  if(t==="ti")f.innerHTML=`<label>回收金額（廠商檢查後）</label><input id="bamt" type="number" inputmode="numeric">`;
  const has=(sel,v)=>[...sel.options].some(o=>o.value===String(v));
  const fillM=()=>{const c=$("#bc").value,ms=MODELS[c].map((m,i)=>[m,i]).filter(([m])=>t==="ac"?m.ac:!m.nojc);
-  $("#bm").innerHTML=ms.map(([m,i])=>`<option value="${i}">${m.n}${t==="ac"?"　"+fmt(m.ac):""}</option>`).join("");
+  $("#bm").innerHTML=ms.map(([m,i])=>`<option value="${i}">${m.n}${t==="ac"?" "+fmt(m.ac):""}</option>`).join("");
   if(BF.m!=null&&has($("#bm"),BF.m))$("#bm").value=BF.m;
   if(t==="jc")fillS();else prev();};
  const fillS=()=>{const m=MODELS[$("#bc").value][+$("#bm").value];$("#bs").innerHTML=skuOpts(m);
@@ -574,6 +594,7 @@ function addRec(){
  if(!draft)return alert("請先完成上方資料");
  const mo=$("#month").value,d=load(),r={...draft,note:$("#bnote").value.trim(),on:true};
  (d[mo]=d[mo]||[]).push(r);saveDB(d);$("#bnote").value="";renderBList();
+ const b=$("#badd");b.textContent="✓ 已加入";clearTimeout(b._t);b._t=setTimeout(()=>b.textContent="＋ 加入本月紀錄",1200);
 }
 function calc(list){
  const acN=list.filter(r=>r.t==="ac").length,rate=acRate(acN);
