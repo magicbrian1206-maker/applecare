@@ -277,7 +277,9 @@ details>div>:first-child{margin-top:0!important}
   <button class="btn ghost" id="bshow">詳細費用明細</button>
   <button class="btn ghost" id="bcopy">複製本月明細</button>
   <button class="btn ghost" id="bclear">清除本月紀錄</button>
-  <div class="small" style="margin-top:8px">紀錄只存在你自己的手機／電腦瀏覽器中，不會上傳。</div>
+  <div class="row"><button class="btn ghost" id="bexp">匯出備份</button><button class="btn ghost" id="bimp">匯入備份</button></div>
+  <input type="file" id="bfile" accept=".json,application/json" hidden>
+  <div class="small" style="margin-top:8px">紀錄只存在你自己的手機／電腦瀏覽器中，不會上傳。<br>建議每月按「匯出備份」存一份；換手機或資料被清除時，用「匯入備份」還原。</div>
  </div>
  <details id="brule" hidden><summary>獎金規則（2026 蘋果專員獎金算法）</summary><ul>
   <li><b>AppleCare+</b>：依個人單月總套數決定比例，套用到當月全部 AC 保費：<br class="pc">1–2 套 2%、3 套 3%、4 套 4%、5 套 5%、6 套以上 6%。</li>
@@ -302,7 +304,7 @@ details>div>:first-child{margin-top:0!important}
  </div>
 </section>
 
-<div class="foot">版本 <span id="build">20261016-155513</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
+<div class="foot">版本 <span id="build">20261016-162813</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
 </main>
 
 <script>
@@ -649,6 +651,37 @@ $("#blist").onclick=e=>{const d=load(),mo=$("#month").value;
  if(e.target.dataset.d!=null){if(!confirm("刪除這筆紀錄？"))return;d[mo].splice(+e.target.dataset.d,1);saveDB(d);renderBList();}};
 $("#bclear").onclick=()=>{if(!confirm("確定清除本月紀錄？"))return;const d=load();delete d[$("#month").value];saveDB(d);renderBList();};
 $("#city").onchange=renderLoc;
+/* ---- 備份：匯出／匯入（只在本機產生檔案，不上傳） ---- */
+const BAK_APP="applecare-records";
+const isRec=r=>r&&typeof r==="object"&&typeof r.t==="string"&&typeof r.label==="string";
+function exportBackup(){
+ const d=load(),n=Object.values(d).reduce((a,l)=>a+l.length,0);
+ if(!n)return alert("目前沒有任何紀錄");
+ const now=new Date(),p=x=>String(x).padStart(2,"0"),name=`蘋果保固紀錄備份-${now.getFullYear()}${p(now.getMonth()+1)}${p(now.getDate())}.json`;
+ const file=new File([JSON.stringify({app:BAK_APP,v:1,exported:now.toISOString(),count:n,data:d},null,1)],name,{type:"application/json"});
+ if(navigator.canShare&&navigator.canShare({files:[file]}))return navigator.share({files:[file],title:name}).catch(()=>{});
+ const a=document.createElement("a");a.href=URL.createObjectURL(file);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+function importBackup(f){
+ const rd=new FileReader();
+ rd.onload=()=>{let j;try{j=JSON.parse(rd.result)}catch(e){return alert("無法讀取：這不是有效的備份檔")}
+  const src=j&&j.app===BAK_APP?j.data:null;
+  if(!src||typeof src!=="object"||!Object.entries(src).every(([k,l])=>/^\d{4}-\d{2}$/.test(k)&&Array.isArray(l)&&l.every(isRec)))return alert("無法讀取：這不是本網站的備份檔");
+  /* 合併：同一筆（內容完全相同）已存在就略過；依數量比對，同月份兩筆相同的銷售不會被合併成一筆 */
+  const d=load();let add=0,dup=0;
+  for(const [k,l] of Object.entries(src)){const cur=d[k]=d[k]||[],cnt=new Map();
+   cur.forEach(r=>{const s=JSON.stringify(r);cnt.set(s,(cnt.get(s)||0)+1)});
+   for(const r of l){const s=JSON.stringify(r),c=cnt.get(s)||0;if(c){cnt.set(s,c-1);dup++}else{cur.push(r);add++}}
+   if(!cur.length)delete d[k];}
+  if(!add)return alert(`備份裡的 ${dup} 筆都已經存在，不需要匯入`);
+  if(!confirm(`將新增 ${add} 筆紀錄${dup?`（另有 ${dup} 筆已存在，會略過）`:""}，確定匯入？`))return;
+  saveDB(d);renderBList();alert(`已匯入 ${add} 筆`);
+ };
+ rd.readAsText(f);
+}
+$("#bexp").onclick=exportBackup;
+$("#bimp").onclick=()=>$("#bfile").click();
+$("#bfile").onchange=e=>{const f=e.target.files[0];e.target.value="";if(f)importBackup(f);};
 $("#bshow").onclick=()=>{SHOW=!SHOW;$("#bshow").textContent=SHOW?"隱藏詳細費用明細":"詳細費用明細";$("#brule").hidden=!SHOW;refreshPrev();renderBList();};
 
 const now=new Date();$("#month").value=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}`;
