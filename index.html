@@ -193,6 +193,13 @@ details>div>:first-child{margin-top:0!important}
  .total{font-size:34px}
  .btn{padding:13px;margin-top:10px}
 }
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.quick>div{border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.7;color:var(--sub)}
+.quick b{color:var(--tx);font-size:15px}
+.quick .qa{background:#F0F3F5;border-left:3px solid var(--deep)}.quick .qj{background:#FAF5EE;border-left:3px solid var(--tan)}
+.quick .qt{font-weight:700;letter-spacing:.04em;font-size:12px}.quick .qa .qt{color:var(--deep)}.quick .qj .qt{color:var(--tan-ink)}
+@media(prefers-color-scheme:dark){.quick .qa,.quick .qj{background:#062A52}.quick .qa .qt{color:#7FA8C9}}
+@media(max-width:640px){.quick{grid-template-columns:1fr;gap:8px}}
 </style>
 </head>
 <body>
@@ -207,7 +214,8 @@ details>div>:first-child{margin-top:0!important}
   <div class="seg" id="catSeg"></div>
   <label>機型</label><select id="model"></select>
   <div id="skuWrap"><label>規格／容量</label><select id="sku"></select>
-  <label>官方售價（保險一律以原價計算，不含任何折扣）</label><input id="price" type="number" readonly tabindex="-1"></div>
+  <input id="price" type="hidden"></div>
+  <div class="quick" id="insQuick"></div>
  </div>
  <div class="card">
   <h2><span class="num">2</span>選擇損壞項目</h2>
@@ -304,7 +312,7 @@ details>div>:first-child{margin-top:0!important}
  </div>
 </section>
 
-<div class="foot">版本 <span id="build">20261016-163033</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
+<div class="foot">版本 <span id="build">20261016-164108</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
 </main>
 
 <script>
@@ -485,6 +493,9 @@ function renderDmg(){const it=damageItems(S.cat,curM(),(curSku()||[])[2]||0);if(
 function renderResult(){
  const cat=S.cat,m=curM(),sk=curSku(),it=damageItems(cat,m,(sk||[])[2]||0).find(x=>x.k===S.dk);
  const price=+$("#price").value||0,tier=jcTier(cat,price,m),fee=cat==="mac"?800:m.fee===null?null:300;
+ $("#insQuick").innerHTML=`<div class="qa"><div class="qt">AppleCare+</div>${m.ac?`<b>${fmt(m.ac)}</b>（${m.y||AC_YEARS[cat]} 年）`:"價目表未列"}</div>`
+  +`<div class="qj"><div class="qt">JustCare</div>${m.nojc?"不承保此類商品":!price?"無售價資料":!tier?"不在承保級距內"
+  :JC_PLANS.map(([l,i])=>`${l.replace("一次繳 ","")} <b>${tier[i]==null?"無":fmt(tier[i])}</b>`).join("<br>")}</div>`;
  const noTxt=`<div class="big">${fmt(it.o)}</div><div class="small">${it.oN?it.oN+"<br>":""}Apple 官網保固外預估價（含稅），<br class="pc"><span style="white-space:nowrap">以檢查為準</span>${fee==null?"":`<div style="margin-top:8px">報價不修／拒修收檢測費 $${fee}</div>`}</div>`;
  let acBody=it.lost?`<div class="big">${fmt(it.o)}</div><div class="small">AppleCare+ 不承保遺失，需自費</div>`
   :`<div class="big">${fmt(it.ac)}</div><div class="small">${it.k==="bat"?"電池容量低於 80% 免費更換<br>":""}${it.acN?it.acN+"<br>":""}</div>`;
@@ -498,7 +509,7 @@ function renderResult(){
   if(it.k==="bat")main=`<div class="big">$0</div><div class="small">限 Apple 品牌，<b>僅二年期／三年期</b>適用；經指定維修中心檢測容量低於 80%（不含 80%）可原機置換電池。一年期不含此項</div>`;
   else if(it.lost)main=`<div class="big">${fmt(it.o)}</div><div class="small">一般遺失不在承保範圍；<b>竊盜損失</b>可依保單申請置換全新品</div>`;
   else main=`<div class="small">原機維修自負額</div><div class="big">${fmt(tier[5])}</div>
-   <div class="small">${tier[5]===0?"可原機維修<b>不收費</b><br>":""}無法維修或維修費高於置換費時改為置換，置換自負額：<b>${fmt(tier[6])}</b>${cat==="mac"?"":"（Apple 換整新機）"}</div>`;
+   <div class="small">${tier[5]===0?"可原機維修<b>不收費</b>，":""}無法維修或維修費高於置換費時改為置換，置換自負額：<b>${fmt(tier[6])}</b>${cat==="mac"?"":"（Apple 換整新機）"}</div>`;
   jcBody=main+`<div class="small" style="margin-top:6px">售價區間 ${jcRange(JC_TABLE[cat],tier)} 的保費：<br>${JC_PLANS.map(([l,i])=>`${l} <b>${tier[i]==null?"無":fmt(tier[i])}</b>`).join("<br>")}</div>`;
  }
  const save=(typeof it.o==="number"&&typeof it.ac==="number"&&!it.lost)?`<div class="save">有 AppleCare+，這次修理可省 <b>${fmt(it.o-it.ac)}</b></div>`:"";
