@@ -200,6 +200,16 @@ details>div>:first-child{margin-top:0!important}
 .quick .qt{font-weight:700;letter-spacing:.04em;font-size:12px}.quick .qa .qt{color:var(--deep)}.quick .qj .qt{color:var(--tan-ink)}
 @media(prefers-color-scheme:dark){.quick .qa,.quick .qj{background:#062A52}.quick .qa .qt{color:#7FA8C9}}
 @media(max-width:640px){.quick{grid-template-columns:1fr;gap:8px}}
+/* ===== 深色模式對比加強（只影響晚上／深色模式） ===== */
+@media(prefers-color-scheme:dark){
+ :root{--card:#0E3A6B;--sub:#C4D0DC;--line:rgba(218,183,133,.24)}
+ select,input{background-color:#052448}
+ .res.no,.res.ac,.res.jc,.quick .qa,.quick .qj{background:#082F5C;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+ .quick .qa{border-left-color:#8FB8DA}.quick .qa .qt,.res.ac h3{color:#8FB8DA}
+ .quick .qj .qt,.res.jc h3{color:#E6C79A}.res.no h3{color:#EBB09B}
+ .seg button,nav button{border-color:rgba(218,183,133,.32)}
+ .vs th.a{background:#2E5F8E}
+}
 </style>
 </head>
 <body>
@@ -312,7 +322,7 @@ details>div>:first-child{margin-top:0!important}
  </div>
 </section>
 
-<div class="foot">版本 <span id="build">20261016-164941</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
+<div class="foot">版本 <span id="build">20261016-184108</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
 </main>
 
 <script>
