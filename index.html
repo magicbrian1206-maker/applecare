@@ -211,6 +211,11 @@ details>div>:first-child{margin-top:0!important}
  .seg button,nav button{border-color:rgba(218,183,133,.32)}
  .vs th.a{background:#2E5F8E}
 }
+/* ===== 我的名字（操作紀錄） ===== */
+.who{margin-left:auto;flex:none;max-width:55%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border:1px solid var(--line);background:var(--bg);color:var(--sub);border-radius:999px;padding:6px 13px;font:500 13px/1.3 inherit;letter-spacing:.02em;cursor:pointer}
+.who::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--tan);margin-right:7px;vertical-align:1px}
+.who.set{color:var(--tx)}.who.set::before{background:var(--teal)}
+.by{display:inline-block;font-size:11px;font-weight:600;padding:1px 8px;border-radius:999px;background:rgba(218,183,133,.22);color:var(--tan-ink);margin-right:6px}
 </style>
 </head>
 <body>
@@ -281,7 +286,7 @@ details>div>:first-child{margin-top:0!important}
 <!-- ============ 操作紀錄 ============ -->
 <section id="bonus" class="tab">
  <div class="card">
-  <h2>新增一筆</h2>
+  <h2>新增一筆<button class="who" id="bwho" type="button" aria-label="我的名字"></button></h2>
   <div class="row"><div><label>月份</label><input id="month" type="month"></div><div><label>類型</label>
    <select id="btype"><option value="ac">AppleCare+</option><option value="jc">JustCare</option><option value="ms">MySetup</option><option value="sv">服務貨號</option><option value="ti">舊換新</option></select></div></div>
   <div id="bform"></div>
@@ -323,7 +328,7 @@ details>div>:first-child{margin-top:0!important}
  </div>
 </section>
 
-<div class="foot">版本 <span id="build">20261016-190146</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
+<div class="foot">版本 <span id="build">20261016-192314</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
 </main>
 
 <script>
@@ -565,6 +570,17 @@ const load=()=>JSON.parse(localStorage.getItem(KEY)||"{}"),saveDB=d=>localStorag
 const catOpts=t=>Object.entries(CATS).filter(([k])=>MODELS[k].some(m=>t==="ac"?m.ac:!m.nojc)).map(([k,v])=>`<option value="${k}">${v}</option>`).join("");
 const acRate=n=>n===0?0:n<=2?0.02:Math.min(n,6)/100;
 let draft=null; /* 目前表單可加入的紀錄 */
+/* 我的名字：只存在本機；新紀錄自動標上，隊長匯入多人備份時用來分人計算 AC 比例 */
+const NKEY="ac-jc-name",esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let NAME=localStorage.getItem(NKEY)||"";
+function renderWho(){const b=$("#bwho");b.textContent=NAME||"設定我的名字";b.classList.toggle("set",!!NAME);}
+function editName(){
+ const v=prompt("我的名字\n新紀錄會自動標上；隊長彙整全隊時用來分人計算獎金。\n※ 請固定同一種寫法，改名後舊紀錄仍算原本的名字。",NAME);
+ if(v==null)return;const n=v.trim().slice(0,20);if(!n||n===NAME)return;
+ NAME=n;localStorage.setItem(NKEY,n);
+ const d=load();let c=0;for(const l of Object.values(d))for(const r of l)if(!r.by){r.by=n;c++}
+ if(c)saveDB(d);renderWho();renderBList();
+}
 let SHOW=false; /* 是否顯示獎金（預設隱藏；重新整理或切換分頁就自動隱藏） */
 let refreshPrev=()=>{};
 
@@ -616,22 +632,28 @@ function renderBForm(){
 }
 function addRec(){
  if(!draft)return alert("請先完成上方資料");
- const mo=$("#month").value,d=load(),r={...draft,note:$("#bnote").value.trim(),on:true};
+ const mo=$("#month").value,d=load(),r={...draft,note:$("#bnote").value.trim(),by:NAME,on:true};
  (d[mo]=d[mo]||[]).push(r);saveDB(d);$("#bnote").value="";renderBList();
  const b=$("#badd");b.textContent="✓ 已加入";clearTimeout(b._t);b._t=setTimeout(()=>b.textContent="＋ 加入本月紀錄",1200);
 }
 function calc(list){
+ /* AC 比例依「個人」當月套數計算；單人時與原本完全相同 */
+ const cnt={};list.forEach(r=>{if(r.t==="ac")cnt[r.by||""]=(cnt[r.by||""]||0)+1});
+ const people=[...new Set(list.map(r=>r.by||""))];
  const acN=list.filter(r=>r.t==="ac").length,rate=acRate(acN);
- const val=r=>r.t==="ac"?r.prem*rate:r.t==="jc"?r.prem*0.1:r.fix;
- return{acN,rate,val};
+ const val=r=>r.t==="ac"?r.prem*acRate(cnt[r.by||""]||0):r.t==="jc"?r.prem*0.1:r.fix;
+ return{acN,rate,val,people,cnt};
 }
 function renderBList(){
- const mo=$("#month").value,list=load()[mo]||[],{acN,rate,val}=calc(list);
- $("#blist").innerHTML=list.length?list.map((r,i)=>`<div class="rec"><div>${r.label}${r.prem?` <span class="small">保費 ${fmt(r.prem)}</span>`:""}${r.note?`<div class="small">${r.note}</div>`:""}</div><div class="amt">${SHOW?fmt1(val(r)):""}</div><button class="x" data-d="${i}" aria-label="刪除">✕</button></div>`).join(""):`<div class="small">尚無紀錄</div>`;
+ const mo=$("#month").value,list=load()[mo]||[],{acN,rate,val,people,cnt}=calc(list),multi=people.length>1;
+ $("#blist").innerHTML=list.length?list.map((r,i)=>`<div class="rec"><div>${r.label}${r.prem?` <span class="small">保費 ${fmt(r.prem)}</span>`:""}${r.note||(SHOW&&multi)?`<div class="small">${SHOW&&multi?`<span class="by">${esc(r.by||"未填名字")}</span>`:""}${r.note||""}</div>`:""}</div><div class="amt">${SHOW?fmt1(val(r)):""}</div><button class="x" data-d="${i}" aria-label="刪除">✕</button></div>`).join(""):`<div class="small">尚無紀錄</div>`;
  const on=list,sum=ts=>on.filter(r=>ts.includes(r.t)).reduce((a,r)=>a+val(r),0),prem=t=>on.filter(r=>r.t===t).reduce((a,r)=>a+r.prem,0);
  const tot=sum(["ac","jc","ms","sv","ti"]);
  const next=acN>0&&acN<6?`再賣 ${acN<=2?3-acN:1} 套 AC，比例升到 ${acN<=2?3:acN+1}%`:"";
  if(!SHOW){$("#bsum").innerHTML=`<div class="small">本月共 ${list.length} 筆</div>`;return;}
+ if(multi){const sub=p=>on.filter(r=>(r.by||"")===p).reduce((a,r)=>a+val(r),0);
+  $("#bsum").innerHTML=`<div class="scroll"><table><tr><th>人員</th><th>AppleCare+</th><th>獎金</th></tr>${people.map(p=>{const n=cnt[p]||0;return`<tr><td>${esc(p||"未填名字")}</td><td>${n} 套（${(acRate(n)*100).toFixed(0)}%）</td><td><b>${fmt1(sub(p))}</b></td></tr>`}).join("")}</table></div>
+  <div class="total">${fmt1(tot)}</div><div class="small" style="text-align:right">${mo} 全隊預估獎金（${people.length} 人）</div>`;return;}
  $("#bsum").innerHTML=`<div class="scroll"><table>
   <tr><td>AppleCare+ ${acN} 套（${(rate*100).toFixed(0)}%）</td><td>保費 ${fmt(prem("ac"))}</td><td><b>${fmt1(sum(["ac"]))}</b></td></tr>
   <tr><td>JustCare（10%）</td><td>保費 ${fmt(prem("jc"))}</td><td><b>${fmt1(sum(["jc"]))}</b></td></tr>
@@ -640,11 +662,11 @@ function renderBList(){
   <div class="total">${fmt1(tot)}</div><div class="small" style="text-align:right">${mo} 預估獎金</div>`;
 }
 function copyMonth(){
- const mo=$("#month").value,list=load()[mo]||[],{acN,rate,val}=calc(load()[mo]||[]);
+ const mo=$("#month").value,list=load()[mo]||[],{acN,rate,val,people,cnt}=calc(list),multi=people.length>1;
  if(!list.length)return alert("本月沒有紀錄");
- const lines=list.map((r,i)=>`${i+1}. ${r.label}${r.note?"（"+r.note+"）":""}${SHOW?"　"+fmt1(val(r)):r.prem?"　保費 "+fmt(r.prem):""}`);
+ const lines=list.map((r,i)=>`${i+1}. ${SHOW&&multi?"["+(r.by||"未填名字")+"] ":""}${r.label}${r.note?"（"+r.note+"）":""}${SHOW?"　"+fmt1(val(r)):r.prem?"　保費 "+fmt(r.prem):""}`);
  const tot=list.reduce((a,r)=>a+val(r),0);
- const txt=!SHOW?`【${mo} 銷售紀錄】\n${lines.join("\n")}\n共 ${list.length} 筆`:`【${mo} 保固獎金明細】\nAC ${acN} 套，比例 ${(rate*100).toFixed(0)}%\n${lines.join("\n")}\n合計：${fmt1(tot)}`;
+ const txt=!SHOW?`【${mo} 銷售紀錄】\n${lines.join("\n")}\n共 ${list.length} 筆`:`【${mo} 保固獎金明細】\n${multi?people.map(p=>{const n=cnt[p]||0;return`${p||"未填名字"}：AC ${n} 套 ${(acRate(n)*100).toFixed(0)}%，小計 ${fmt1(list.filter(r=>(r.by||"")===p).reduce((a,r)=>a+val(r),0))}`}).join("\n"):`AC ${acN} 套，比例 ${(rate*100).toFixed(0)}%`}\n${lines.join("\n")}\n合計：${fmt1(tot)}`;
  (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>alert("已複製"),()=>prompt("請長按複製：",txt));
 }
 
@@ -679,7 +701,7 @@ const isRec=r=>r&&typeof r==="object"&&typeof r.t==="string"&&typeof r.label==="
 function exportBackup(){
  const d=load(),n=Object.values(d).reduce((a,l)=>a+l.length,0);
  if(!n)return alert("目前沒有任何紀錄");
- const now=new Date(),p=x=>String(x).padStart(2,"0"),name=`蘋果保固紀錄備份-${now.getFullYear()}${p(now.getMonth()+1)}${p(now.getDate())}.json`;
+ const now=new Date(),p=x=>String(x).padStart(2,"0"),name=`蘋果保固紀錄備份-${NAME?NAME.replace(/[\\/:*?"<>|\s]/g,"")+"-":""}${now.getFullYear()}${p(now.getMonth()+1)}${p(now.getDate())}.json`;
  const file=new File([JSON.stringify({app:BAK_APP,v:1,exported:now.toISOString(),count:n,data:d},null,1)],name,{type:"application/json"});
  if(navigator.canShare&&navigator.canShare({files:[file]}))return navigator.share({files:[file],title:name}).catch(()=>{});
  const a=document.createElement("a");a.href=URL.createObjectURL(file);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
@@ -702,6 +724,7 @@ function importBackup(f){
  rd.readAsText(f);
 }
 $("#bexp").onclick=exportBackup;
+$("#bwho").onclick=editName;renderWho();
 $("#bimp").onclick=()=>$("#bfile").click();
 $("#bfile").onchange=e=>{const f=e.target.files[0];e.target.value="";if(f)importBackup(f);};
 $("#bshow").onclick=()=>{SHOW=!SHOW;$("#bshow").textContent=SHOW?"隱藏詳細費用明細":"詳細費用明細";$("#brule").hidden=!SHOW;refreshPrev();renderBList();};
