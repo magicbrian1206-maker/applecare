@@ -231,7 +231,7 @@ details>div>:first-child{margin-top:0!important}
   <label>機型</label><select id="model"></select>
   <div id="skuWrap"><label>規格／容量</label><select id="sku"></select>
   <input id="price" type="hidden"></div>
-  <div class="quick" id="insQuick"></div>
+  <div id="insQuick" style="margin-top:16px"></div>
  </div>
  <div class="card">
   <h2><span class="num">2</span>選擇損壞項目</h2>
@@ -328,7 +328,7 @@ details>div>:first-child{margin-top:0!important}
  </div>
 </section>
 
-<div class="foot">版本 <span id="build">20261017-171721</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
+<div class="foot">版本 <span id="build">20261017-182536</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
 </main>
 
 <script>
@@ -509,9 +509,9 @@ function renderDmg(){const it=damageItems(S.cat,curM(),(curSku()||[])[2]||0);if(
 function renderResult(){
  const cat=S.cat,m=curM(),sk=curSku(),it=damageItems(cat,m,(sk||[])[2]||0).find(x=>x.k===S.dk);
  const price=+$("#price").value||0,tier=jcTier(cat,price,m),fee=cat==="mac"?800:m.fee===null?null:300;
- $("#insQuick").innerHTML=`<div class="qa"><div class="qt">AppleCare+</div>${m.ac?`<b>${fmt(m.ac)}</b>（${m.y||AC_YEARS[cat]} 年）`:"價目表未列"}</div>`
-  +`<div class="qj"><div class="qt">JustCare</div>${m.nojc?"不承保此類商品":!price?"無售價資料":!tier?"不在承保級距內"
-  :JC_PLANS.map(([l,i])=>`${l.replace("一次繳 ","")} <b>${tier[i]==null?"無":fmt(tier[i])}</b>`).join("<br>")}</div>`;
+ /* 保費速覽：跟「優劣比較」同樣式的表格；AC+ 放在對應年限那一列，方便同年限對照 */
+ {const y=m.y||AC_YEARS[cat],jn=m.nojc?"不承保此類商品":!price?"無售價資料":!tier?"不在承保級距內":"";
+  $("#insQuick").innerHTML=`<table class="vs"><tr><th style="background:none"></th><th class="a">AppleCare+</th><th class="j">JustCare</th></tr>${JC_PLANS.map(([l,i],k)=>`<tr><td>${l.replace("一次繳 ","")}</td>${m.ac?`<td>${i-1===y?`<b>${fmt(m.ac)}</b>`:"—"}</td>`:k?"":`<td rowspan="4" class="small">價目表未列</td>`}${jn?(k?"":`<td rowspan="4" class="small">${jn}</td>`):`<td><b>${tier[i]==null?"無":fmt(tier[i])}</b></td>`}</tr>`).join("")}</table>`;}
  const noTxt=`<div class="big">${fmt(it.o)}</div><div class="small">${it.oN?it.oN+"<br>":""}Apple 官網保固外預估價（含稅），<br class="pc"><span style="white-space:nowrap">以檢查為準</span>${fee==null?"":`<div style="margin-top:8px">報價不修／拒修收檢測費 $${fee}</div>`}</div>`;
  let acBody=it.lost?`<div class="big">${fmt(it.o)}</div><div class="small">AppleCare+ 不承保遺失，需自費</div>`
   :`<div class="big">${fmt(it.ac)}</div><div class="small">${it.k==="bat"?"電池容量低於 80% 免費更換<br>":""}${it.acN?it.acN+"<br>":""}</div>`;
