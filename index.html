@@ -332,7 +332,7 @@ details>div>:first-child{margin-top:0!important}
  </div>
 </section>
 
-<div class="foot">版本 <span id="build">20261017-183416</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
+<div class="foot">版本 <span id="build">20261018-140535</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
 </main>
 
 <script>
@@ -492,10 +492,10 @@ function damageItems(cat,m,vi){
   if(m.t!=="desktop")a.push({k:"screen",l:"螢幕損壞",o:M,oN:MN,ac:s});
   a.push({k:"case",l:"外部機殼損壞",o:M,oN:MN,ac:s},{k:"other",l:"其他意外損壞（主機板、進液）",o:M,oN:MN,ac:x});
   if(m.t==="laptop")a.push({k:"bat",l:"電池更換",o:m.bat,ac:0});return a;}
- if(cat==="watch")return[{k:"acc",l:"意外損壞（螢幕、機身）",o:m.v[vi][1],ac:m.ded},{k:"bat",l:"電池更換",o:3350,ac:0}];
+ if(cat==="watch")return[{k:"acc",l:"意外損壞（螢幕、機身）",o:m.v[vi][1],ac:m.ded,jcRep:true},{k:"bat",l:"電池更換",o:3350,ac:0}];
  if(cat==="airpods"){
   if(m.max)return[{k:"acc",l:"意外損壞",o:Q,ac:900},{k:"bat",l:"電池更換",o:m.bat,ac:0}];
-  return[{k:"bud",l:"單耳損壞",o:m.bud,ac:900},{k:"cs",l:"充電盒損壞",o:m.cs,ac:900},{k:"bat",l:"電池更換",o:m.bat,ac:0},
+  return[{k:"bud",l:"單耳損壞",o:m.bud,ac:900,jcRep:true},{k:"cs",l:"充電盒損壞",o:m.cs,ac:900,jcRep:true},{k:"bat",l:"電池更換",o:m.bat,ac:0},
    {k:"lb",l:"單耳遺失",o:m.lb,ac:"不承保（遺失）",lost:true},{k:"lc",l:"充電盒遺失",o:m.lc,ac:"不承保（遺失）",lost:true}];}
 }
 
