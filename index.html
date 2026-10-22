@@ -332,7 +332,7 @@ details>div>:first-child{margin-top:0!important}
  </div>
 </section>
 
-<div class="foot">版本 <span id="build">20261022-150405</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+ 價目表：2026.10 版、JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
+<div class="foot">版本 <span id="build">20261022-151324</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+ 價目表：2026.10 版、JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
 </main>
 
 <script>
@@ -346,7 +346,7 @@ const AC_YEARS = {iphone:2,ipad:2,mac:3,watch:2,airpods:2,other:2};
    v   = 維修價分組 [名稱, 官網「其他損壞」價]（iPad／Watch 依 Wi-Fi、材質不同）
    sku = 販售規格 [名稱, 售價, 對應 v 的索引] */
 const IPHONE = [
- {n:"iPhone Duo",ac:10490,duo:true,o:{layer:1700,front:12290,back:6290,both:16350,cam:7390,inner:37350,other:56190,bat:7950},sku:[["256GB",74900],["512GB",81900],["1TB",96900],["2TB",118900]]},
+ {n:"iPhone Duo",ac:10490,duo:true,o:{layer:1700,front:12290,back:6290,inner:37350,other:56190,bat:7950},sku:[["256GB",74900],["512GB",81900],["1TB",96900],["2TB",118900]]},
  {n:"iPhone 18 Pro Max",ac:6990,o:{screen:12290,back:4990,both:15090,cam:7999,bat:4490,other:32690},sku:[["256GB",49900],["512GB",56900],["1TB",71900],["2TB",93900]]},
  {n:"iPhone 18 Pro",ac:6990,o:{screen:10790,back:4990,both:13490,cam:7999,bat:4490,other:31190},sku:[["256GB",44900],["512GB",51900],["1TB",66900],["2TB",88900]]},
  {n:"iPhone Air",ac:6990,o:{screen:10790,back:4990,both:13490,cam:5190,bat:4150,other:26390},sku:[["256GB",39900],["512GB",46900],["1TB",61900]]},
@@ -477,8 +477,7 @@ function damageItems(cat,m,vi){
  if(cat==="iphone"){
   if(m.duo){const o=m.o;return[
    {k:"outer",l:"內螢幕保護層損壞",o:o.layer,oN:"官網「表層損壞」價格",ac:690},{k:"front",l:"外螢幕損壞",o:o.front,ac:900},
-   {k:"back",l:"機背玻璃損壞",o:o.back,ac:900},{k:"both",l:"外螢幕＋機背",o:o.both,ac:3200,acN:"官網未單列，以最高自負額計",jcRep:true},
-   {k:"cam",l:"後置相機損壞",o:o.cam,ac:3200,acN:"屬「其他意外損壞」",jcRep:true},
+   {k:"back",l:"機背玻璃損壞",o:o.back,ac:900},
    {k:"inner",l:"內螢幕損壞",o:o.inner,ac:3200,jcRep:true},
    {k:"other",l:"其他意外損壞",o:o.other,ac:3200,jcRep:true},{k:"bat",l:"電池更換",o:o.bat,ac:0}];}
   const o=m.o;return[
