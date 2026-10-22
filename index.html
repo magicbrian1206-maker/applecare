@@ -259,7 +259,7 @@ details>div>:first-child{margin-top:0!important}
   <li>意外損壞<b>不限次數</b>（依 Apple 官網說明），每次支付自負額。</li>
   <li>電池容量低於 80% 可<b>免費</b>更換。</li>
   <li>iPhone：螢幕或機背玻璃 $900；其他意外損壞 $3,200。</li>
-  <li>iPhone Duo：外保護層 $690、正面螢幕 $900、機背玻璃 $900、內螢幕 $3,200、其他 $3,200。</li>
+  <li>iPhone Duo：內螢幕保護層 $690、外螢幕／機背維修 $900、內螢幕維修／其他損壞 $3,200。</li>
   <li>iPad：僅螢幕 $900、其他 $3,200。</li>
   <li><b>iPad 配件</b>：Apple Pencil 與鍵盤意外損壞自負額 $900；<br class="pc"><b>配件需自行致電 Apple 客服加保</b>（<a href="tel:0800095988">0800-095-988</a>）。</li>
   <li>Mac：螢幕或外殼 $3,200、其他 $9,600；MacBook Neo：螢幕或外殼 $1,590、其他 $4,990。</li>
@@ -332,7 +332,7 @@ details>div>:first-child{margin-top:0!important}
  </div>
 </section>
 
-<div class="foot">版本 <span id="build">20261018-141814</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+／JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
+<div class="foot">版本 <span id="build">20261022-144956</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+ 價目表：2026.10 版、JustCare 價目表：2026.09 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
 </main>
 
 <script>
@@ -346,7 +346,7 @@ const AC_YEARS = {iphone:2,ipad:2,mac:3,watch:2,airpods:2,other:2};
    v   = 維修價分組 [名稱, 官網「其他損壞」價]（iPad／Watch 依 Wi-Fi、材質不同）
    sku = 販售規格 [名稱, 售價, 對應 v 的索引] */
 const IPHONE = [
- {n:"iPhone Duo",ac:null,duo:true,sku:[["256GB",74900],["512GB",81900],["1TB",96900],["2TB",118900]]},
+ {n:"iPhone Duo",ac:10490,duo:true,o:{layer:1700,back:6290,other:"$7,390～$56,190",bat:7950},sku:[["256GB",74900],["512GB",81900],["1TB",96900],["2TB",118900]]},
  {n:"iPhone 18 Pro Max",ac:6990,o:{screen:12290,back:4990,both:15090,cam:7999,bat:4490,other:32690},sku:[["256GB",49900],["512GB",56900],["1TB",71900],["2TB",93900]]},
  {n:"iPhone 18 Pro",ac:6990,o:{screen:10790,back:4990,both:13490,cam:7999,bat:4490,other:31190},sku:[["256GB",44900],["512GB",51900],["1TB",66900],["2TB",88900]]},
  {n:"iPhone Air",ac:6990,o:{screen:10790,back:4990,both:13490,cam:5190,bat:4150,other:26390},sku:[["256GB",39900],["512GB",46900],["1TB",61900]]},
@@ -407,8 +407,8 @@ const AIRPODS = [
 /* Beats／HomePod／Apple TV（2026.09 DM）：gen 單一意外損壞項目、o 原始維修費用、ded 自負額、y 保固年限（未填用類別預設）、fee:null 檢測費未公布；無售價資料，JustCare 不承保 */
 const OTHER = [
  {n:"Beats",ac:990,gen:true,ded:900,o:"$2,690～$3,390",fee:null,nojc:true,sku:[]},
- {n:"HomePod",ac:1400,gen:true,ded:1300,o:8799,nojc:true,sku:[]},
- {n:"HomePod mini",ac:500,gen:true,ded:500,o:3189,nojc:true,sku:[]},
+ {n:"HomePod",ac:1390,gen:true,ded:1300,o:8799,nojc:true,sku:[]},
+ {n:"HomePod mini",ac:590,gen:true,ded:500,o:4190,nojc:true,sku:[]},
  {n:"Apple TV",ac:720,y:3,gen:true,ded:490,o:"$5,869～$6,799",fee:null,nojc:true,sku:[]}
 ];
 const MODELS = {iphone:IPHONE,ipad:IPAD,mac:MAC,watch:WATCH,airpods:AIRPODS,other:OTHER};
@@ -475,10 +475,10 @@ function damageItems(cat,m,vi){
  const Q="依原廠報價";
  if(m.gen)return[{k:"acc",l:"意外損壞",o:m.o,ac:m.ded}];
  if(cat==="iphone"){
-  if(m.duo)return[
-   {k:"outer",l:"外保護層",o:"官網未公布",ac:690},{k:"front",l:"正面螢幕損壞",o:"官網未公布",ac:900},
-   {k:"back",l:"機背玻璃損壞",o:"官網未公布",ac:900},{k:"inner",l:"內螢幕損壞",o:"官網未公布",ac:3200},
-   {k:"other",l:"其他意外損壞",o:"官網未公布",ac:3200},{k:"bat",l:"電池更換",o:"官網未公布",ac:0}];
+  if(m.duo){const o=m.o;return[
+   {k:"outer",l:"內螢幕保護層損壞",o:o.layer,oN:"價目表「表層損壞」價格",ac:690},{k:"front",l:"外螢幕損壞",o:Q,oN:"價目表未單列外螢幕維修價",ac:900},
+   {k:"back",l:"機背玻璃損壞",o:o.back,ac:900},{k:"inner",l:"內螢幕損壞",o:o.other,oN:"價目表列為「其他損壞」區間",ac:3200},
+   {k:"other",l:"其他意外損壞",o:o.other,ac:3200},{k:"bat",l:"電池更換",o:o.bat,ac:0}];}
   const o=m.o;return[
    {k:"screen",l:"螢幕破裂",o:o.screen,ac:900},{k:"back",l:"機背玻璃破裂",o:o.back,ac:900},
    {k:"both",l:"螢幕＋機背",o:o.both,ac:3200,acN:"官網未單列，以最高自負額計"},{k:"cam",l:"後置相機損壞",o:o.cam,ac:3200,acN:"屬「其他意外損壞」",jcRep:true},
@@ -544,7 +544,7 @@ function renderResult(){
 function renderRates(){
  const acRows=Object.entries(MODELS).map(([c,ms])=>ms.map(m=>`<tr><td>${CATS[c]}</td><td>${m.n}</td><td>${m.ac?fmt(m.ac)+(m.acSrc?"＊":""):"未列"}</td><td>${m.y||AC_YEARS[c]} 年</td></tr>`).join("")).join("");
  const jc=(t,name)=>`<p><b>JustCare ${name}</b></p><div class="scroll"><table><tr><th>裝置售價區間</th><th>月繳</th><th>1年</th><th>2年</th><th>3年</th><th>維修</th><th>置換</th></tr>${t.map(r=>`<tr><td>${jcRange(t,r)}</td>${r.slice(1,7).map(v=>`<td>${v==null?"—":v.toLocaleString()}</td>`).join("")}</tr>`).join("")}</table></div>`;
- $("#rateTables").innerHTML=`<p><b>AppleCare+</b></p><div class="scroll"><table><tr><th>類別</th><th>機型</th><th>費用</th><th>年限</th></tr>${acRows}</table></div><div class="small">＊ 取自 2026.07 版價目表（2026.09 版未列）</div>`+jc(JC_PHONE,"iPhone")+jc(JC_STD,"iPad／Watch／AirPods")+jc(JC_MAC,"Mac");
+ $("#rateTables").innerHTML=`<p><b>AppleCare+</b></p><div class="scroll"><table><tr><th>類別</th><th>機型</th><th>費用</th><th>年限</th></tr>${acRows}</table></div><div class="small">＊ 取自 2026.07 版價目表（2026.10 版未列）</div>`+jc(JC_PHONE,"iPhone")+jc(JC_STD,"iPad／Watch／AirPods")+jc(JC_MAC,"Mac");
 }
 
 
