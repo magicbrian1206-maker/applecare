@@ -261,7 +261,7 @@ details>div>:first-child{margin-top:0!important}
   <li>iPhone：螢幕或機背玻璃 $900；其他意外損壞 $3,200。</li>
   <li>iPhone Duo：內螢幕保護層 $690、外螢幕／機背維修 $900、內螢幕維修／其他損壞 $3,200。</li>
   <li>iPad：僅螢幕 $900、其他 $3,200。</li>
-  <li><b>iPad 配件</b>：Apple Pencil 與鍵盤意外損壞自負額 $900；<br class="pc"><b>配件需自行致電 Apple 客服加保</b>（<a href="tel:0800095988">0800-095-988</a>）。</li>
+  <li><b>iPad 配件</b>：Apple Pencil／Apple Pencil Pro／Apple iPad 鍵盤意外損壞自負額各 $900；<br class="pc"><b>配件需自行致電 Apple 客服加保</b>（<a href="tel:0800095988">0800-095-988</a>）。<br class="pc">iPad 和配件同時損壞，<b>分別計算、各自付費</b>。</li>
   <li>Mac：螢幕或外殼 $3,200、其他 $9,600；MacBook Neo：螢幕或外殼 $1,590、其他 $4,990。</li>
   <li>Watch：SE 3／S12 $2,200、Ultra 4 $2,500。AirPods、Beats：$900。<br class="pc">HomePod $1,300、HomePod mini $500、Apple TV $490。</li>
   <li>授權維修中心與 Apple 自負額相同。<b>遺失不在承保範圍</b>。</li>
@@ -332,7 +332,7 @@ details>div>:first-child{margin-top:0!important}
  </div>
 </section>
 
-<div class="foot">版本 <span id="build">20261030-130807</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+ 價目表：2026.10 版、JustCare 價目表：2026.10 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
+<div class="foot">版本 <span id="build">20261030-132646</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+ 價目表：2026.10 版、JustCare 價目表：2026.10 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
 </main>
 
 <script>
@@ -493,7 +493,7 @@ function damageItems(cat,m,vi){
  if(cat==="ipad"){const other=m.v[vi][1];return[
   {k:"screen",l:"僅螢幕損壞",o:other,oN:"官網未單列螢幕價，以「其他損壞」計",ac:900},
   {k:"other",l:"其他損壞（彎曲、進液等）",o:other,ac:3200,jcRep:true},{k:"bat",l:"電池更換",o:m.bat,ac:0},
-  {k:"acc",l:"Apple Pencil／鍵盤",o:Q,ac:900,acN:"配件需自行致電 Apple 客服加保（0800-095-988）",jcNo:true}];}
+  {k:"acc",l:"Apple Pencil／Pencil Pro／鍵盤",o:Q,ac:900,acN:"配件需自行致電 Apple 客服加保（0800-095-988）；與 iPad 同時損壞需分別付費",jcNo:true}];}
  if(cat==="mac"){const s=m.neo?1590:3200,x=m.neo?4990:9600,a=[],M="$10,000 以上",MN="官網未公布；依 JustCare 價目表「主機板、螢幕、硬碟等 $10,000 以上」";
   if(m.t!=="desktop")a.push({k:"screen",l:"螢幕損壞",o:M,oN:MN,ac:s});
   a.push({k:"case",l:"外部機殼損壞",o:M,oN:MN,ac:s},{k:"other",l:"其他意外損壞（主機板、進液）",o:M,oN:MN,ac:x});
@@ -532,7 +532,7 @@ function renderResult(){
  else if(!tier)jcBody=`<div class="small warn">此金額（${fmt(price)}）不在 JustCare 承保級距內</div>`;
  else{
   let main;
-  if(it.jcNo)main=`<div class="big">不承保</div><div class="small">JustCare 不承保 Apple Pencil／鍵盤等配件，損壞需自費（依原廠報價）</div>`;
+  if(it.jcNo)main=`<div class="big">不承保</div><div class="small">JustCare 不承保 Apple Pencil／Pencil Pro／鍵盤等配件，損壞需自費（依原廠報價）</div>`;
   else if(it.k==="bat")main=`<div class="big">$0</div><div class="small">限 Apple 品牌，<b>僅二年期／三年期</b>適用；經指定維修中心檢測容量低於 80%（不含 80%）可原機置換電池。一年期不含此項</div>`;
   else if(it.lost)main=`<div class="big">${fmt(it.o)}</div><div class="small">一般遺失不在承保範圍；<b>竊盜損失</b>可依保單申請置換全新品</div>`;
   else if(it.jcRep)main=`<div class="big">${fmt(tier[6])}</div>
