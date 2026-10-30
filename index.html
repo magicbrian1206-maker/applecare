@@ -233,7 +233,7 @@ details>div>:first-child{margin-top:0!important}
   <h2><span class="num">1</span>選擇商品</h2>
   <div class="seg" id="catSeg"></div>
   <label>機型</label><select id="model"></select>
-  <div id="skuWrap"><label>規格／容量</label><select id="sku"></select>
+  <div id="skuWrap"><label>規格／容量<span id="skuTmp" class="small"></span></label><select id="sku"></select>
   <input id="price" type="hidden"></div>
   <div id="insQuick" style="margin-top:16px"></div>
  </div>
@@ -332,7 +332,7 @@ details>div>:first-child{margin-top:0!important}
  </div>
 </section>
 
-<div class="foot">版本 <span id="build">20261022-154857</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+ 價目表：2026.10 版、JustCare 價目表：2026.10 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
+<div class="foot">版本 <span id="build">20261030-130807</span><br>維修價格：Apple 官網（2026-10-07 擷取，含稅預估價）<br>AppleCare+ 價目表：2026.10 版、JustCare 價目表：2026.10 版　·　售價：2026.09.16 燦坤內部價目表<br>僅供參考，以實際報價為準</div>
 </main>
 
 <script>
@@ -369,6 +369,8 @@ const IPAD = [
  {n:"iPad Air 13 吋（M4）",ac:3590,bat:4990,v:[["Wi-Fi",23790],["行動網路",25290]],sku:[
   ["Wi-Fi 128GB",31900,0],["Wi-Fi 256GB",35400,0],["Wi-Fi 512GB",42400,0],["Wi-Fi 1TB",52900,0],
   ["5G 128GB",36900,1],["5G 256GB",40400,1],["5G 512GB",47400,1],["5G 1TB",57900,1]]},
+ {n:"iPad mini（A20 Pro）",ac:2690,bat:"官網未公布",v:[["Wi-Fi","官網未公布"],["行動網路","官網未公布"]],skuTmp:true,sku:[
+  ["Wi-Fi 128GB",19900,0],["Wi-Fi 256GB",23400,0],["Wi-Fi 512GB",30400,0],["LTE 128GB",24900,1],["LTE 256GB",28400,1],["LTE 512GB",35400,1]]},
  {n:"iPad mini（A17 Pro）",ac:2490,bat:3990,v:[["Wi-Fi",14590],["行動網路",16090]],sku:[
   ["Wi-Fi 128GB",19900,0],["Wi-Fi 256GB",23400,0],["Wi-Fi 512GB",30400,0],["LTE 128GB",24900,1],["LTE 256GB",28400,1],["LTE 512GB",35400,1]]},
  {n:"iPad（A16）",ac:2490,bat:3990,v:[["Wi-Fi",12890],["行動網路",14590]],sku:[
@@ -378,8 +380,11 @@ const MAC = [
  {n:"MacBook Neo 13 吋（A18 Pro）",ac:4990,t:"laptop",bat:4890,neo:true,sku:[["8GB/256GB",22900],["8GB/512GB（Touch ID）",25900]]},
  {n:"MacBook Air 13 吋（M5）",ac:6790,t:"laptop",bat:5790,sku:[["16GB/512GB",42900],["16GB/1TB",53400],["24GB/1TB",60400]]},
  {n:"MacBook Air 15 吋（M5）",ac:7790,t:"laptop",bat:6390,sku:[["16GB/512GB",49900],["16GB/1TB",60400],["24GB/1TB",67400]]},
- {n:"MacBook Pro 14 吋（M5 系列）",ac:9490,t:"laptop",bat:7410,sku:[["M5 16GB/1TB",64900],["M5 24GB/1TB",71900],["M5 32GB/1TB",78900],["M5 Pro 15核 24GB/1TB",84900],["M5 Pro 15核 24GB/2TB",102400],["M5 Pro 18核 24GB/2TB",109900],["M5 Max 36GB/2TB",139900]]},
+ {n:"MacBook Pro 14 吋（M5）",ac:9490,t:"laptop",bat:7410,sku:[["M5 16GB/1TB",64900],["M5 24GB/1TB",71900],["M5 32GB/1TB",78900]]},
+ {n:"MacBook Pro 14 吋（M5 Pro／M5 Max）",ac:12790,t:"laptop",bat:7410,sku:[["M5 Pro 15核 24GB/1TB",84900],["M5 Pro 15核 24GB/2TB",102400],["M5 Pro 18核 24GB/2TB",109900],["M5 Max 36GB/2TB",139900]]},
+ {n:"MacBook Pro 14 吋（M6）",ac:10790,t:"laptop",bat:"官網未公布",skuTmp:true,sku:[["16GB/1TB",64900],["24GB/1TB",71900],["32GB/1TB",78900]]},
  {n:"MacBook Pro 16 吋（M5 系列）",ac:13490,t:"laptop",bat:8090,mbp16:true,sku:[["M5 Pro 24GB/1TB",99900],["M5 Pro 48GB/1TB",120900],["M5 Max 32核 36GB/2TB",144900],["M5 Max 40核 48GB/2TB",169900]]},
+ {n:"iMac（M6）",ac:6790,t:"imac",nojc:true,sku:[]},
  {n:"iMac 24 吋（M4）",ac:5790,t:"imac",nojc:true,sku:[["8核 16GB/256GB",49900],["10核 16GB/256GB",57900],["10核 16GB/512GB",64900],["10核 24GB/512GB",71900],["10核 16GB/256GB 奈米紋理",64900]]},
  {n:"Mac mini（2026）",ac:3490,t:"desktop",nojc:true,sku:[["M6 16GB/256GB",29900],["M6 16GB/512GB",36900],["M6 24GB/512GB",43900],["M5 Pro 24GB/512GB",59900]]},
  {n:"Mac Studio（2026）",ac:5790,t:"desktop",nojc:true,sku:[["M5 Max 36GB/512GB",84900],["M5 Ultra 96GB/1TB",199900]]},
@@ -506,7 +511,7 @@ const skuOpts=m=>(m.sku||[]).map((s,i)=>`<option value="${i}">${s[0]} ${fmt(s[1]
 
 function renderCats(){$("#catSeg").innerHTML=Object.entries(CATS).map(([k,v])=>`<button class="${k===S.cat?"on":""}" data-c="${k}">${v}</button>`).join("");}
 function renderModels(){$("#model").innerHTML=MODELS[S.cat].map((m,i)=>`<option value="${i}">${m.n}</option>`).join("");$("#model").value=S.mi;renderSku();}
-function renderSku(){const m=curM(),sk=m.sku||[];$("#skuWrap").style.display=sk.length?"":"none";
+function renderSku(){const m=curM(),sk=m.sku||[];$("#skuTmp").textContent=m.skuTmp?"　（新款售價未公布，暫用舊款售價計算 JustCare）":"";$("#skuWrap").style.display=sk.length?"":"none";
  if(S.si>=sk.length)S.si=0;$("#sku").innerHTML=skuOpts(m);$("#sku").value=S.si;$("#price").value=sk.length?sk[S.si][1]:"";renderDmg();}
 function renderDmg(){const it=damageItems(S.cat,curM(),(curSku()||[])[2]||0);if(!it.find(x=>x.k===S.dk))S.dk=it[0].k;
  $("#dmgSeg").innerHTML=it.map(x=>`<button class="${x.k===S.dk?"on":""}" data-k="${x.k}">${x.l}</button>`).join("");renderResult();}
